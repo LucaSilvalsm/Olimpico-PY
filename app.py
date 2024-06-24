@@ -6,6 +6,7 @@ from controller.UsuarioController import user_bp as user_blueprint
 from controller.AdminController import admin_bp as admin_blueprint
 from controller.page_controller import page_bp
 from controller.ProdutoController import produto_bp
+from controller.CarrinhoController import cesta_bp
 from Model.config import DATABASE
 import secrets
 import os
@@ -27,6 +28,7 @@ db.init_app(app)
 
 # Registro dos Blueprints
 app.register_blueprint(page_bp)
+app.register_blueprint(cesta_bp, url_prefix='/user', name='cesta_bp')
 app.register_blueprint(user_blueprint, url_prefix='/user', name='user_bp')
 app.register_blueprint(admin_blueprint, url_prefix='/admin', name='admin_bp')
 app.register_blueprint(produto_bp, url_prefix='/produto')

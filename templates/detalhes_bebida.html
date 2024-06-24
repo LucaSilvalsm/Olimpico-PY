@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Detalhe do Produto{% endblock %}
+{% block title %}Detalhe do Bebida{% endblock %}
 
 {% block content %}
 <div id="main-container" class="container-fluidProdutos">
@@ -12,12 +12,12 @@
       <p class="card-text">Ingredientes: {{ produto.ingrediente }}</p>
       <p class="card-text">Preço R$ {{ produto.preco }}</p>
       <!-- Adicionando o formulário para adicionar ao carrinho -->
-      <form class="addToCartForm" action="{{ url_for('cesta_bp.add_to_cart') }}" method="POST" id="carrinhoForm">
+      <form class="addToCartForm" action="" method="POST" id="carrinhoForm">
         <input type="hidden" name="produto_id" value="{{ produto.id }}">
         <input type="hidden" name="quantidade" id="quantity_hidden" value="0">
         <input type="hidden" name="totalPrice" id="totalPrice_hidden" value="0">
         
-        <h5 class="card-title"> Produto </h5>
+        <h5 class="card-title"> Produto  </h5>
         <table>
           <thead>
             <tr>
@@ -45,7 +45,7 @@
         </table>
         
         <label for="observacao">Observação:</label>
-        <textarea id="observacao" name="observacao" rows="5" class="form-control" required placeholder="Faça uma Observação do seu pedido"></textarea>
+        <textarea id="observacao" name="observacao" rows="5" class="form-control" ></textarea>
         
         <button type="submit" id="addToCartButton" class="card-btn">Adicionar ao Carrinho Por: R$ 0.00</button>
       </form>

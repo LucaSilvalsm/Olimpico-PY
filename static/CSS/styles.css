@@ -289,8 +289,8 @@ table {
 
 thead th,
 tbody td {
-  padding: 10px;
-  text-align: left;
+  padding: 5px;
+  align-items: last baseline;
   
 }
 

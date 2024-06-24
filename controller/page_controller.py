@@ -76,7 +76,11 @@ def all_produtos():
         produto_dao.close()  # Certifica-se de fechar a sessão do banco de dados
 
 
-##Testando o detalhe pedido
+
+
+
+
+##Testando o detalhe pedido  ## As rotas dos pedidos
 
 @page_bp.route('/produto/<int:produto_id>', methods=['GET'])
 def detalhes_produto(produto_id):
@@ -88,4 +92,30 @@ def detalhes_produto(produto_id):
  
     print(f"Detalhes do produto encontrado: {produto}")
     return render_template('detalhes_produto.html', produto=produto)
+
+
+#detalhe porcao
+@page_bp.route('/porcao/<int:produto_id>', methods=['GET'])
+def detalhes_porcao(produto_id):
+    produto_dao = ProdutoDAO()
+    produto = produto_dao.get_produto_by_id(produto_id)
+    if not produto:
+        print(f"Produto ID {produto_id} não encontrado")
+        return render_template('produto_nao_encontrado.html')
+ 
+    print(f"Detalhes do produto encontrado: {produto}")
+    return render_template('detalhes_porcao.html', produto=produto)
+
+
+
+@page_bp.route('/bebidas/<int:produto_id>', methods=['GET'])
+def detalhes_bebida(produto_id):
+    produto_dao = ProdutoDAO()
+    produto = produto_dao.get_produto_by_id(produto_id)
+    if not produto:
+        print(f"Produto ID {produto_id} não encontrado")
+        return render_template('produto_nao_encontrado.html')
+ 
+    print(f"Detalhes do produto encontrado: {produto}")
+    return render_template('detalhes_bebida.html', produto=produto)
 
