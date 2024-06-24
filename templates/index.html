@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %}Página Inicial - Hamburgueria{% endblock %}
+
+{% block content %}
+<div id="main-container" class="container-fluid">
+  <div class="category-section">
+    <h2 class="page-title">Hamburgueres Artesanal</h2>
+    <p class="section-description">Veja os hambúrgueres artesanais disponíveis:</p>
+    <div class="movies-container">
+      {% for produto in artesanais %}
+        {% include 'card.html' %}
+      {% endfor %}
+      {% if artesanais|length == 0 %}
+        <p class="empty-list">Ainda não há hambúrgueres artesanais cadastrados!</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<div id="main-container" class="container-fluid">
+  <div class="category-section">
+    <h2 class="page-title">Hamburgueres Tradicional</h2>
+    <p class="section-description">Veja os hambúrgueres tradicionais disponíveis:</p>
+    <div class="movies-container">
+      {% for produto in tradicionais %}
+        {% include 'card.html' %}
+      {% endfor %}
+      {% if tradicionais|length == 0 %}
+        <p class="empty-list">Ainda não há hambúrgueres tradicionais cadastrados!</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<div id="main-container" class="container-fluid">
+  <div class="category-section">
+    <h2 class="page-title">Porções</h2>
+    <p class="section-description">Veja as porcao disponíveis:</p>
+    <div class="movies-container">
+      {% for produto in porcao %}
+        {% include 'porcao.html' %}
+      {% endfor %}
+      {% if porcao|length == 0 %}
+        <p class="empty-list">Ainda não há porcao cadastrados!</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<div id="main-container" class="container-fluid">
+  <div class="category-section">
+    <h2 class="page-title">Bebidas</h2>
+    <p class="section-description">Veja as bebidas disponíveis:</p>
+    <div class="movies-container">
+      {% for produto in bebidas %}
+        {% include 'bebidas.html' %}
+      {% endfor %}
+      {% if bebidas|length == 0 %}
+        <p class="empty-list">Ainda não há bebidas cadastrados!</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<!-- Scripts específicos para a página index.html -->
+<script>
+  // Seu código JavaScript aqui
+</script>
+{% endblock %}

@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %}Página Inicial{% endblock %}
+
+{% block styles %}
+  <link rel="stylesheet" href="/static/css/login.css">
+  <link rel="stylesheet" href="/static/css/newhamburguer.css">
+  <link rel="stylesheet" href="/static/css/styles.css">
+{% endblock %}
+
+{% block content %}
+<div class="limiter">
+    <div class="container-login100">
+        <div class="wrap-login100">
+            <form method="POST" action="{{ url_for('admin_bp.login') }}" method="POST" class="login100-form validate-form">
+                <input type="hidden" name="type" value="login">
+
+                <span class="login100-form-title p-b-43">
+                    Faça o Login Como Administrador
+                </span>
+
+                {% if get_flashed_messages(with_categories=true) %}
+                    <div class="alert-messages">
+                        {% for category, message in get_flashed_messages(with_categories=true) %}
+                            <div class="alert alert-{{ category }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <div class="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
+                    <input class="input100" type="text" name="email">
+                    <span class="focus-input100"></span>
+                    <span class="label-input100">Email</span>
+                </div>
+
+                <div class="wrap-input100 validate-input" data-validate="Password is required">
+                    <input class="input100" type="password" name="senha">
+                    <span class="focus-input100"></span>
+                    <span class="label-input100">Senha</span>
+                </div>
+
+                <div class="flex-sb-m w-full p-t-3 p-b-32">
+                    <div>
+                        <a href="#" class="txt1">
+                            Esqueceu a senha?
+                        </a>
+                    </div>
+                </div>
+
+                <div class="container-login100-form-btn">
+                    <button class="login100-form-btn">Entrar</button>
+                </div>
+                
+                <div class="text-center p-t-46 p-b-20">
+                    <span class="card-btn">
+                        <a href="cadastro_admin">Cadastrar Como ADMIN</a>
+                    </span>
+                </div>
+                
+
+                <div class="text-center p-t-46 p-b-20">
+                    <span class="card-btn">
+                        <a href="/cadastro">Não tenho conta</a>
+                    </span>
+                </div>
+
+            </form>
+
+            <div class="login100-more" style="background-image: url('/static/img/fundo.jpg')"></div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+  <!-- Scripts específicos da página inicial, se necessário -->
+{% endblock %}

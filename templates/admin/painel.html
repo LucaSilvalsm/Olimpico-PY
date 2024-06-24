@@ -1,0 +1,126 @@
+<!-- templates/add_hamburguer.html -->
+
+{% extends 'admin/base.html' %}
+
+{% block content %}
+
+<div class="content">
+    <div class="titulo-secao">
+        <h2>Dashboard</h2>
+        <br />
+        <hr>
+        <p><i class="fa-solid fa-house"></i> / Dashboard do Projeto </p>
+    </div> <!--FIM Titulo-Secação=-->
+    <div class="box-info">
+        <div class="box-info-single" id="vendas">
+            <div class="info-text">
+                <h3>Total Vendas</h3>
+                <p> R$ <?= $usuarioPedidos ?></p>
+            </div>
+            <i class="fa-solid fa-money-check-dollar"></i>
+        </div>
+        <div class="box-info-single" id="pedidos">
+            <div class="info-text">
+                <h3>Total Pedidos</h3>
+                <p>Total de pedidos </p>
+            </div>
+            <i class="fa-solid fa-store"></i>
+        </div>
+        <div class="box-info-single" id="lucros">
+            <div class="info-text">
+                <h3>Total Lucro</h3>
+                <p>R$ 1.500,00</p>
+            </div>
+            <i class="fa-solid fa-money-check-dollar"></i>
+        </div>
+        <div class="box-info-single" id="media">
+            <div class="info-text">
+                <h3>Ticket Medio  </h3>
+                <p>O Ticket Medio é R$ </p>
+            </div>
+            <i class="fa-solid fa-money-check-dollar"></i>
+        </div>
+    </div>
+    <div id="dashboard-container" class="dashboard-fluid">
+        <h2 class="dashboard-title">Pedidos</h2>
+        <p class="dashboard-description">Confira aqui</p>
+        <div class="col-md-12" id="add-carrinho-container"></div>
+    </div>
+    <div class="col-md-12" id="carrinho-dashboard">
+        <table class="table">
+            <thead>
+                <th scope="col">#</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Observação</th>
+                <th scope="col">Status</th>
+                <th scope="col">Total</th>
+                <th scope="col" nowrap>Forma de Pagamento</th>
+                <th scope="col" class="actions-column">Ações</th>
+            </thead>
+            <tbody>
+                <?php foreach ($todosPedidos as $pedido) : ?>
+                    <tr>
+                        <td style="vertical-align: middle;" scope="row"></td>
+                        <td style="vertical-align: middle;"></td>
+                        <td style="vertical-align: middle;"></td>
+                        <td style="vertical-align: middle;">
+                            <select name="status_pedido" class="status-select" data-pedido-id="<?= $pedido->id ?>">
+                                <option value="Preparando">Preparando</option>
+                                <option value="Saiu para entrega" >Saiu para Entrega</option>
+                                <option value="Entregue" >Entregue</option>
+                            </select>
+                        </td>
+                        <td style="vertical-align: middle;" nowrap>R$ </td>
+                        <td style="vertical-align: middle;"></td>
+                        <td  style="vertical-align: middle;"class="action"> <!--Editar-->
+                            <a href="#" class="edit-link" data-pedido-id=""><i class="fas fa-edit edit-icon"></i></a>
+
+                            <input type="hidden" name="id" value="<?= $pedido->id ?>">
+
+                            <form  class="delete-form" action="" method="POST">
+                                <input type="hidden" name="type" value="delete">
+                                <input type="hidden" name="id" value="">
+                                <button type="submit" class="delete-btn"><i class="fas fa-times delete-icon"></i></button>
+                            </form>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+</div> <!--FIM Content-->
+
+</section> <!--MAIN-->
+
+<script>
+    document.querySelectorAll('.status-select').forEach(select => {
+        select.addEventListener('change', function(event) {
+            const pedidoId = this.getAttribute('data-pedido-id');
+            const novoStatus = this.value;
+
+            fetch("dashboard.php", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: `id=${pedidoId}&status_pedido=${novoStatus}`
+                })
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        throw new Error('Falha ao atualizar o status do pedido.');
+                    }
+                })
+                .then(data => {
+                    // Recarrega a página após a atualização do status do pedido
+                    location.reload();
+                })
+                .catch(error => {
+                    console.error(error.message);
+                });
+        });
+    });
+</script>
+
+{% endblock %}

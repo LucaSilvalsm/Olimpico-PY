@@ -1,0 +1,50 @@
+{% extends 'admin/base.html' %}
+
+{% block content %}
+<div id="main-container" class="container-fluid">
+    <h2 class="page-title">Produtos</h2>
+    <p class="section-description">Confira aqui os produtos cadastrados</p>
+    <div class="col-md-12" id="add-carrinho-container">
+
+    </div>
+    <div class="col-md-12" id="carrinho-dashboard" style="overflow-y: auto; max-height: 800px;">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Imagem</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Tipo do Produto</th>
+                    <th scope="col">Preço</th>
+                    <th scope="col" class="actions-column">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for categoria, produtos in produtos.items() %}
+                    {% for produto in produtos %}
+                        <tr>
+                            <td style="vertical-align: middle;" scope="row">{{ produto.id }}</td>
+                            <td>
+                                <div class="card-img-top-cesta" style="background-image: url('{{ url_for('static', filename='img/produtos/' + produto.imagem) }}')"></div>
+                            </td>
+                            <td style="vertical-align: middle;">{{ produto.nome_produto }}</td>
+                            <td style="vertical-align: middle;">{{ produto.tipo_produto }}</td>
+                            <td style="vertical-align: middle;">R$ {{ produto.preco }}</td>
+                            <td style="vertical-align: middle;" class="actions-column">
+                                <form class="delete-form" action="{{ url_for('produto_bp.delete') }}" method="POST">
+                                    <input type="hidden" name="type" value="deleteProduto">
+                                    <input type="hidden" name="id" value="{{ produto.id }}">
+                                    <button type="submit" class="delete-btn"><i class="fas fa-times delete-icon"></i></button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% endfor %}
+                <tr>
+                    <td colspan="6"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

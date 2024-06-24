@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block title %}Detalhe do Produto{% endblock %}
+
+{% block content %}
+<div id="main-container" class="container-fluidProdutos">
+  <div class="card produto-card-produtos">
+    <div class="card-img-top-produtos" style="background-image: url('{{ url_for('static', filename='img/produtos/' + produto.imagem) }}')"></div>
+    <div class="card-body d-flex flex-column justify-content-between">
+      <h5 class="card-title">{{ produto.nome_produto }}</h5>
+      <p class="card-text">Descrição: {{ produto.descricao }}</p>
+      <p class="card-text">Ingredientes: {{ produto.ingrediente }}</p>
+      <p class="card-text">Preço R$ {{ produto.preco }}</p>
+      
+      <!-- Adicionando o formulário para adicionar ao carrinho -->
+      <form class="addToCartForm" action="" method="POST" id="carrinhoForm">
+        <input type="hidden" name="produto_id" value="{{ produto.id }}">
+        <input type="hidden" name="quantidade" id="inputQuantidade" value="0">
+        <input type="hidden" name="totalPrice" id="inputTotalPrice" value="0">
+        
+        <h5 class="card-title"> Produto e Adicionais </h5>
+        <table>
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Preço Unitário</th>
+              <th>Quantidade</th>
+              <th>Preço Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{{ produto.nome_produto }}</td>
+              <td>R$ {{ produto.preco }}</td>
+              <td>
+                <div class="quantity">
+                  <button type="button" onclick="decrement('{{ produto.nome_produto }}', {{ produto.preco }})">-</button>
+                  <span id="quantity_{{ produto.nome_produto }}">0</span>
+                  <button type="button" onclick="increment('{{ produto.nome_produto }}', {{ produto.preco }})">+</button>
+                </div>
+              </td>
+              <td id="totalPrice_{{ produto.nome_produto }}">R$ 0.00</td>
+            </tr>
+          </tbody>
+        </table>
+        
+        <label for="observacao">Observação:</label>
+        <textarea id="observacao" name="observacao" rows="5" class="form-control" required placeholder="Faça uma Observação do seu pedido"></textarea>
+        
+        <button type="submit" id="addToCartButton" class="card-btn">Adicionar ao Carrinho</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  function increment(produtoNome, preco) {
+    let quantitySpan = document.getElementById('quantity_' + produtoNome);
+    let totalPriceSpan = document.getElementById('totalPrice_' + produtoNome);
+    let quantidade = parseInt(quantitySpan.innerText);
+    quantidade += 1;
+    let totalPrice = quantidade * preco;
+    
+    quantitySpan.innerText = quantidade;
+    totalPriceSpan.innerText = 'R$ ' + totalPrice.toFixed(2);
+    
+    document.getElementById('inputQuantidade').value = quantidade;
+    document.getElementById('inputTotalPrice').value = totalPrice.toFixed(2);
+  }
+
+  function decrement(produtoNome, preco) {
+    let quantitySpan = document.getElementById('quantity_' + produtoNome);
+    let totalPriceSpan = document.getElementById('totalPrice_' + produtoNome);
+    let quantidade = parseInt(quantitySpan.innerText);
+    if (quantidade > 0) {
+      quantidade -= 1;
+    }
+    let totalPrice = quantidade * preco;
+    
+    quantitySpan.innerText = quantidade;
+    totalPriceSpan.innerText = 'R$ ' + totalPrice.toFixed(2);
+    
+    document.getElementById('inputQuantidade').value = quantidade;
+    document.getElementById('inputTotalPrice').value = totalPrice.toFixed(2);
+  }
+</script>
+
+{% endblock %}

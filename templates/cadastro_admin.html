@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}Registro de Administrador{% endblock %}
+
+{% block content %}
+<div class="limiter">
+    <div class="container-login100">
+        <div class="wrap-login100">
+            <form method="POST" action="{{ url_for('admin_bp.register') }}"  class="login100-form validate-form">
+                <span class="login100-form-title p-b-43">
+                    <h3 class="title-form">Criando Cadastro de Administrador</h3>
+                </span>
+
+                {% if get_flashed_messages(with_categories=true) %}
+                    <div class="alert-messages">
+                        {% for category, message in get_flashed_messages(with_categories=true) %}
+                            <div class="alert alert-{{ category }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <div class="wrap-input100 validate-input">
+                    <input class="input100" type="text" name="nome" required>
+                    <span class="focus-input100"></span>
+                    <label class="label-input100" for="nome">Nome: </label>
+                </div>
+                <div class="wrap-input100 validate-input">
+                    <input class="input100" type="text" name="sobrenome" required>
+                    <span class="focus-input100"></span>
+                    <label class="label-input100" for="sobrenome">Sobrenome: </label>
+                </div>
+                
+                <div class="wrap-input100 validate-input">
+                    <input class="input100" type="text" name="email" required>
+                    <span class="focus-input100"></span>
+                    <label class="label-input100" for="email">Email: </label>
+                </div>
+                <div class="wrap-input100 validate-input">
+                    <input class="input100" type="password" name="senha" required>
+                    <span class="focus-input100"></span>
+                    <label class="label-input100" for="senha">Senha: </label>
+                </div>
+                <div class="wrap-input100 validate-input">
+                    <input class="input100" type="password" name="confirmacaoSenha" required>
+                    <span class="focus-input100"></span>
+                    <label class="label-input100" for="confirmacaoSenha">Confirme a Senha: </label>
+                </div>
+
+                <div class="container-login100-form-btn">
+                    <button class="login100-form-btn">
+                        Criar Conta de Administrador
+                    </button>
+                </div>
+
+            </form>
+
+            <div class="login100-more" style="background-image: url('/static/img/fundo.jpg');">
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

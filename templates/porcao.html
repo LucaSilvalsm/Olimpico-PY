@@ -1,0 +1,21 @@
+{% block content %}
+
+<div class="card movie-card">
+    <div class="card-img-top" style="background-image: url('{{ url_for('static', filename='img/produtos/' + produto.imagem) }}')"></div>
+    <div class="card-body d-flex flex-column justify-content-between">
+      <h5 class="card-title">{{ produto.nome_produto }}</h5>
+      <p class="card-text">Descrição: {{ produto.descricao }}</p>
+      <p class="card-text">Ingredientes: {{ produto.ingrediente }}</p>
+      <p class="card-text">Preço R$ {{ produto.preco }}</p>
+      <!-- Adicionando o formulário para adicionar ao carrinho -->
+      <form class="addToCartForm" action="" method="POST">
+        <!-- Definindo o tipo do item como "produtos" -->
+        <input type="hidden" name="item_type" value="produtos">
+        <!-- Passando o ID do produto como parâmetro -->
+        <input type="hidden" name="produto_id" value="{{ produto.id }}">
+        <button type="submit" class="card-btn"><i class='bx bx-cart'></i>Adicionar ao Carrinho</button>
+      </form>
+    </div>
+  </div>
+  
+{% endblock %}

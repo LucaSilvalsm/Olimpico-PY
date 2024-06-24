@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Página Inicial - Hamburgueria{% endblock %}
+
+{% block content %}
+<div id="main-container" class="container-fluid">
+  <div class="category-section">
+    <h2 class="page-title">Hamburgueres Artesanal</h2>
+    <p class="section-description">Veja os hambúrgueres artesanais disponíveis:</p>
+    {% for produto in artesanais %}
+    {% include 'card.html' %}
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<!-- Scripts específicos para a página index.html -->
+<script>
+  // Seu código JavaScript aqui
+</script>
+{% endblock %}
+<a href=""></a>

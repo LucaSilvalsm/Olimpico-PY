@@ -1,0 +1,76 @@
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.engine.url import URL
+
+app = Flask(__name__)
+
+# Importa as configurações do banco de dados
+from Model.config import DATABASE
+
+# Cria a URL do banco de dados
+database_url = URL(**DATABASE)
+
+# Configuração do banco de dados
+app.config['SQLALCHEMY_DATABASE_URI'] = database_url
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+db = SQLAlchemy(app)
+
+# Modelos
+class Usuario(db.Model):
+    __tablename__ = 'usuario'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    nome = db.Column(db.String(200))
+    sobrenome = db.Column(db.String(200))
+    endereco = db.Column(db.String(200))
+    numero_casa = db.Column(db.Integer)
+    complemento = db.Column(db.String(200))
+    bairro = db.Column(db.String(200))
+    telefone = db.Column(db.String(200))
+    email = db.Column(db.String(100))
+    senha = db.Column(db.String(200))
+    token = db.Column(db.String(200))
+    carrinhos = db.relationship('Carrinho', backref='usuario', lazy=True)
+    pedidos = db.relationship('Pedido', backref='usuario', lazy=True)
+
+class Produto(db.Model):
+    __tablename__ = 'produtos'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    nome_produto = db.Column(db.String(200))
+    tipo_produtos = db.Column(db.String(200))
+    tamanho = db.Column(db.String(200))
+    ingrediente = db.Column(db.String(200))
+    preco = db.Column(db.Numeric(10, 2))
+    descricao = db.Column(db.Text)
+    imagem = db.Column(db.String(250))
+    carrinhos = db.relationship('Carrinho', backref='produto', lazy=True)
+
+class Carrinho(db.Model):
+    __tablename__ = 'carrinho'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    usuario_id = db.Column(db.Integer, db.ForeignKey('usuario.id'), nullable=False)
+    nome_produto = db.Column(db.String(200))
+    imagem_produto = db.Column(db.String(200))
+    produto_id = db.Column(db.Integer, db.ForeignKey('produtos.id'), nullable=False)
+    quantidade = db.Column(db.Integer)
+    observacao = db.Column(db.Text)
+    preco_total = db.Column(db.Numeric(10, 2))
+
+class Pedido(db.Model):
+    __tablename__ = 'pedidos'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    usuario_id = db.Column(db.Integer, db.ForeignKey('usuario.id'), nullable=False)
+    data_pedido = db.Column(db.DateTime, default=db.func.current_timestamp())
+    forma_pagamento = db.Column(db.String(100))
+    endereco_entrega = db.Column(db.String(400))
+    status = db.Column(db.String(100))
+    valor_total = db.Column(db.Numeric(10, 2))
+    observacao = db.Column(db.Text)
+    itens_comprados = db.Column(db.Text)
+
+@app.route('/')
+def hello():
+    return "Hello, Flask!"
+
+if __name__ == '__main__':
+    app.run(debug=True)

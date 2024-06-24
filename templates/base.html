@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Hamburgueria{% endblock %}</title>
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/css/bootstrap.css" integrity="sha512-drnvWxqfgcU6sLzAJttJv7LKdjWn0nxWCSbEAtxJ/YYaZMyoNLovG7lPqZRdhgL1gAUfa+V7tbin8y+2llC1cw==" crossorigin="anonymous" />
+
+  <link rel="stylesheet" href="/static/CSS/newhamburguer.css">  
+ 
+   <link rel="stylesheet"
+   href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+   <!-- or -->
+   <link rel="stylesheet"
+   href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+   <!-- Font Awesome -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
+   <!-- CSS do projeto -->
+ 
+   
+   
+   <link rel="stylesheet" href="/static/CSS/styles.css">
+   <link rel="stylesheet" href="/static/CSS/login.css">
+</head>
+<body>
+  <header>
+    <nav id="main-navbar" class="navbar navbar-expand-lg">
+      <a href="/" class="navbar-brand">
+        <img src="/static/img/logo.png" alt="logo" id="logo">
+        <span id="hamburgueria-title">Olimpica</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbar">
+        <ul class="navbar-nav">
+          <!-- Exemplo de links de navegação -->
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class='bx bxs-offer'></i> Promoção
+            </a>
+          </li>
+          <!-- Links exibidos apenas quando o usuário está logado -->
+          {% if session.usuario_nome %}
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class='bx bx-notepad'></i> Meus Pedidos
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="/cesta" class="nav-link">
+              <i class='bx bx-basket'></i> Carrinho
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class='bx bx-user'></i> {{ session.usuario_nome }}
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ url_for('user_bp.logout') }}" class="nav-link">Sair</a>
+          </li>
+          {% else %}
+          <li class="nav-item">
+            <a href="/login" class="nav-link bold"><i class="fas fa-user"></i> Entrar / Cadastrar</a>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <div class="container"> <!-- Use 'container' ou 'container-fluid' conforme o layout desejado -->
+    {% block content %}
+    {% endblock %}
+  </div>
+
+  <footer class="rodape" id="contato">
+    <div class="rodape-div">
+
+      <div class="rodape-div-1">
+          <div class="rodape-div-1-coluna elementoFooter">
+              <!-- elemento -->
+              <span><h3 class="title-footer">Endereço</h3></span>
+              <p>Rua: Avenida das Americas </p>
+              <p>Bairro: Barra da Tijuda-RJ</p>
+          </div>
+      </div>
+
+      <div class="rodape-div-2">
+          <div class="rodape-div-2-coluna">
+              <!-- elemento -->
+             <div class="elementoFooter">
+              <span><h3 class="title-footer" >Horario de Funcionamento </h3></span>               
+                <p>Segunda-Feira: Fechado. </p>
+                <p>Terça-Feira: Fechado. </p>
+                <p>Terça-Feira: 19hr as 00hr. </p>
+                <p>Quarta-Feira: 19hr as 00hr. </p>
+                <p>Quinta-Feira: 18hr as 00hr. </p>
+                <p>Sexta-Feira: 19hr as 01hr. </p>
+                <p>Sabado: 18hr as 01:30hr. </p>
+                <p>Domingo: 18hr as 00hr. </p>
+             </div>
+          </div>
+      </div>
+
+      <div class="rodape-div-3">
+          <div class="rodape-div-3-coluna">
+              <!-- elemento -->
+              <span><h3 class="title-footer" >Formas de Pagamento</h3></span>
+              <div class="elementoFooter">              
+                <p>Credito</p>
+                <p>Debito</p>
+                <p>Dinheiro/PIX</p>
+                <p>VR Refeição</p>
+                <p>Alelo Refeição</p>
+              </div>
+              
+          </div>
+      </div>
+
+      <div class="rodape-div-4">
+          <div class="rodape-div-4-coluna">
+              <!-- elemento -->
+              <div class="elementoFooter">
+                <span><h3 class="title-footer" >Forma de Contato</h3></span>
+                <div class="social-midia">
+                  <p> <a href="#"><i class="fab fa-facebook-square"></i> Olimpica Hamburgueria</a></p>
+                  <p> <a href="#"><i class="fab fa-instagram"></i> Olimpica Hamburgueria</a> </p>
+                  <p> <a href="#"><i class="fab  fa-whatsapp"></i> Whatsap: (21) 99343-xxxx</a></p>
+                </div>
+              </div>
+          </div>
+      </div>
+
+  </div>
+  <p class="rodape-direitos">Copyright © 2023 – Todos os Direitos Reservados.</p>
+</footer>
+<!-- BOOTSTRAP JS -->
+
+
+</body>
+  </footer>
+
+  <!-- Bootstrap JS e outros scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitt

@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block title %}Registro{% endblock %}
+
+{% block styles %}
+  <link rel="stylesheet" href="/static/css/login.css">
+  <link rel="stylesheet" href="/static/css/newhamburguer.css">
+  <link rel="stylesheet" href="/static/css/styles.css">
+{% endblock %}
+
+{% block content %}
+<div class="limiter">
+    <div class="container-login100">
+        <div class="wrap-login100">
+            <form method="POST" action="{{ url_for('user_bp.register') }}" class="login100-form validate-form" onsubmit="return validateForm()">
+
+                <input type="hidden" name="type" value="registrar">
+                
+                <span class="login100-form-title p-b-43">
+                    <h3 class="title-form">Criando Cadastro</h3>
+                </span>
+
+                {% if get_flashed_messages(with_categories=true) %}
+                    <div class="alert-messages">
+                        {% for category, message in get_flashed_messages(with_categories=true) %}
+                            <div class="alert alert-{{ category }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+				
+                <div class="wrap-input100 validate-input">
+                    <input class="input100" type="text" name="nome" required>
+                    <span class="focus-input100"></span>						
+                    <label class="label-input100" for="nome">Nome: </label>
+                </div>		
+                <div class="wrap-input100 validate-input">
+                    <input class="input100" type="text" name="sobrenome" required>
+                    <span class="focus-input100"></span>						
+                    <label class="label-input100" for="sobrenome">Sobrenome: </label>
+                </div>	
+                <div class="wrap-input100 validate-input">
+                    <input class="input100" type="text" name="endereco">
+                    <span class="focus-input100"></span>						
+                    <label class="label-input100" for="endereco">Endereço: </label>
+                </div>		
+                <div class="wrap-input100 validate-input">
+                    <input class="input100" type="text" name="numero_casa">
+                    <span class="focus-input100"></span>						
+                    <label class="label-input100" for="numero_casa">Numero da Casa: </label>
+                </div>		
+                <div class="wrap-input100 validate-input">
+                    <input class="input100" type="text" name="complemento">
+                    <span class="focus-input100"></span>						
+                    <label class="label-input100" for="complemento">Complemento: </label>
+                </div>	
+                <div class="wrap-input100 validate-input">
+                    <input class="input100" type="text" name="bairro">
+                    <span class="focus-input100"></span>						
+                    <label class="label-input100" for="bairro">Bairro: </label>
+                </div>		
+                <div class="wrap-input100 validate-input">
+                    <input class="input100" type="text" name="telefone" required>
+                    <span class="focus-input100"></span>						
+                    <label class="label-input100" for="telefone">Telefone de Contato: </label>
+                </div>	
+                <div class="wrap-input100 validate-input">
+                    <input class="input100" type="text" name="email">
+                    <span class="focus-input100"></span>						
+                    <label class="label-input100" for="email">Email: </label>
+                </div>						
+                <div class="wrap-input100 validate-input">
+                    <input class="input100" type="password" name="senha" required>
+                    <span class="focus-input100"></span>
+                    <label class="label-input100" for="senha">Senha: </label>
+                </div>
+                <div class="wrap-input100 validate-input">
+                    <input class="input100" type="password" name="confirmacaoSenha" required>
+                    <span class="focus-input100"></span>
+                    <label class="label-input100" for="confirmacaoSenha">Confirme a Senha: </label>
+                </div>
+                    
+                <div class="container-login100-form-btn">
+                    <input type="submit" class="login100-form-btn" value="Registrar">
+                </div>					
+            </form>
+
+            <div class="login100-more" style="background-image: url('/static/img/fundo.jpg')"></div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+
+{% endblock %}
