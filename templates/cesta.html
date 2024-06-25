@@ -1,1 +1,109 @@
-caiu aqui
+{% extends "base.html" %}
+
+{% block title %}Carrinho de Compras{% endblock %}
+
+{% block content %}
+<div id="main-container" class="container-fluid">
+    <h2 class="page-title">Carrinho</h2>
+    <p class="section-description">Confira aqui o Carrinho</p>
+    <div class="col-md-12" id="carrinho-dashboard">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Imagem</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Quantidade</th>
+                    <th scope="col">Observação</th>
+                    <th scope="col">Total</th>
+                    <th scope="col" class="actions-column">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% set valor_total = 0 %}
+                {% for carrinho in itens_carrinho %}
+                <tr>
+                    <td style="vertical-align: middle;" scope="row">{{ carrinho.id }}</td>
+                    <td>
+                        <div class="card-img-top-cesta" style="background-image: url('{{ url_for('static', filename='img/produtos/' + carrinho.imagem_produto) }}')"></div>
+                    </td>
+                    <td style="vertical-align: middle;">{{ carrinho.nome_produto }}</td>
+                    <td style="vertical-align: middle;">{{ carrinho.quantidade }}</td>
+                    <td style="vertical-align: middle;">{{ carrinho.observacao }}</td>
+                    <td style="vertical-align: middle;">R$ {{ carrinho.preco_total }}</td>
+                    <td style="vertical-align: middle;" class="actions-column">
+                        <form class="delete-form" action="{{ url_for('cesta_bp.delete') }}" method="POST">
+                            <input type="hidden" name="type" value="deleteProduto">
+                            <input type="hidden" name="id" value="{{ carrinho.id }}">
+                            <button type="submit" class="delete-btn"><i class="fas fa-times delete-icon"></i></button>
+                        </form>
+                    </td>
+                </tr>
+                {% set preco_total = carrinho.preco_total %}
+                {% set valor_total = valor_total + preco_total %}
+                {% endfor %}
+                <!-- Tabela aninhada para endereço, complemento e telefone -->
+                <tr>
+                    <td colspan="7">
+                        <table class="table">
+                            <tr>
+                                <th scope="col">Endereço: </th>
+                                <th scope="col">Complemento : </th>
+                                <th scope="col">Numero da Casa: </th>
+                                <th scope="col">Telefone de Contato</th>
+                            </tr>
+                            <tr>
+                                <td>{{ usuario_data.endereco }}</td>
+                                <td>{{ usuario_data.complemento }}</td>
+                                <td>{{ usuario_data.numero_casa }}</td>
+                                <td>{{ usuario_data.telefone }}</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <!-- Nova linha para o botão "Criar Pedido" -->
+                <tr>
+                    <td colspan="7">
+                        <form id="form-criar-pedido" action="" method="POST">
+                            <input type="hidden" name="type" value="criarPedido">
+
+                            <!-- Label "Forma de Pagamento" com pequeno espaço à esquerda -->
+                            <div class="col-md-3">
+                                <label for="formaPagamento" class="form-label">Forma de Pagamento:</label>
+                            </div>
+
+                            <!-- Menu suspenso (select) ocupando a mesma largura -->
+                            <div class="col-md-12">
+                                <select id="formaPagamento" name="formaPagamento" class="form-select">
+                                    <option value="CARTAO">Cartão</option>
+                                    <option value="PIX">PIX</option>
+                                    <option value="DINHEIRO">Dinheiro</option>
+                                </select>
+                            </div>
+
+                            <!-- Campo para inserir o valor em dinheiro (oculto inicialmente) -->
+                            <div id="campoDinheiro" class="col-md-12" style="display: none;">
+                                <label for="valorDinheiro">Valor em dinheiro:</label>
+                                <input type="number" id="valorDinheiro" name="valorDinheiro" class="form-control" step="0.01">
+                                <h3 id="trocoMsg" class="card-btn">O troco será calculado automaticamente</h3>
+                            </div>
+
+                            <!-- Botão para criar o pedido -->
+                            <div class="col-md-12">
+                                <button id="pedido-btn" type="submit" class="delete-btn card-btn">
+                                    <i class='bx bx-cart'></i> <span id="total-carrinho">Criar Pedido por R$ {{ total_carrinho }}</span>
+                                </button>
+                            </div>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    // Aqui você pode adicionar scripts JavaScript adicionais, se necessário.
+</script>
+
+{% endblock %}

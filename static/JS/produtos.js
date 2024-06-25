@@ -1,5 +1,5 @@
- // Adicione aqui o código JavaScript necessário para manipular as quantidades e calcular o preço total
- function increment(productName) {
+
+  function increment(productName) {
     var quantityElement = document.getElementById("quantity_" + productName);
     var quantityInput = document.getElementById("quantity_hidden");
     var currentValue = parseInt(quantityElement.innerText);
@@ -28,14 +28,14 @@
     // Atualiza o valor total no botão "Adicionar ao Carrinho"
     var addToCartButton = document.getElementById('addToCartButton');
     if (addToCartButton) {
-      var buttonText = `Adicionar ao Carrinho Por: R$ ${total.toFixed(2)}`;
-      addToCartButton.textContent = buttonText;
+        var buttonText = `Adicionar ao Carrinho Por: R$ ${total.toFixed(2)}`;
+        addToCartButton.textContent = buttonText;
     }
 
     // Atualiza o valor de totalPriceInput quando totalPriceDisplay é alterado
-    var totalPriceInput = document.getElementById('totalPrice_hidden');
+    var totalPriceInput = document.getElementById('preco_total_hidden');
     totalPriceInput.value = total.toFixed(2);
-  }
+}
 
   function calculateTotal() {
     var totalPrice = 0;

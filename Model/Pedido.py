@@ -10,5 +10,3 @@ class Pedido(db.Model):
     status = db.Column(db.String(100))
     valor_total = db.Column(db.Numeric(10, 2))
     observacao = db.Column(db.Text)
-    itens_comprados = db.Column(db.Text)
-    

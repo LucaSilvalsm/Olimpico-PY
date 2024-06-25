@@ -1,107 +1,94 @@
-from flask import Blueprint, request, redirect, url_for, flash, render_template, session
-from sqlalchemy.exc import IntegrityError
+from flask import Blueprint, render_template, request, redirect, url_for, flash
+from flask_login import login_user, current_user,logout_user
+from Model import db, Usuario
 from dao.UsuarioDAO import UsuarioDAO
-from Model.Usuario import Usuario
-from Model.config import DATABASE
-
-DB_URL = f"postgresql://{DATABASE['username']}:{DATABASE['password']}@{DATABASE['host']}:{DATABASE['port']}/{DATABASE['database']}"
 
 user_bp = Blueprint('user_bp', __name__)
 
-@user_bp.route('/register', methods=['POST', 'GET'])
+# Instância do DAO para manipulação de usuários
+usuario_dao = UsuarioDAO()
+
+@user_bp.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
-        # Pegando os dados do formulário
         nome = request.form['nome']
         sobrenome = request.form['sobrenome']
-        email = request.form['email']
-        telefone = request.form['telefone']
         endereco = request.form['endereco']
         numero_casa = request.form['numero_casa']
-        complemento = request.form['complemento']
+        complemento = request.form['complemento']  # Corrigido o nome do campo
         bairro = request.form['bairro']
+        telefone = request.form['telefone']
+        email = request.form['email']
         senha = request.form['senha']
         confirmacaoSenha = request.form['confirmacaoSenha']
 
-        # Verificar se as senhas correspondem
+        # Verifica se o email já está cadastrado
+        if usuario_dao.obter_por_email(email):
+            flash('Este email já está sendo utilizado.', 'error')
+            return redirect(url_for('user_bp.register'))
+
+        # Verifica se as senhas coincidem
         if senha != confirmacaoSenha:
-            flash('As senhas não correspondem', 'error')
+            flash('As senhas não coincidem.', 'error')
             return redirect(url_for('user_bp.register'))
 
-        # Criar uma nova instância do usuário
-        novo_usuario = Usuario(
-            nome=nome,
-            sobrenome=sobrenome,
-            telefone=telefone,
-            email=email,
-            senha=senha,  # Armazenar a senha como uma string sem hash (não recomendado em produção)
-            endereco=endereco,
-            numero_casa=numero_casa,
-            bairro=bairro,
-            complemento=complemento
-        )
+        # Cria um novo usuário
+        novo_usuario = Usuario(nome=nome, sobrenome=sobrenome, endereco=endereco,
+                               numero_casa=numero_casa, complemento=complemento,
+                               bairro=bairro, telefone=telefone, email=email, senha=senha)
 
-        # Usando o DAO para incluir o usuário no banco de dados
-        dao = UsuarioDAO()
+        # Adiciona o usuário ao banco de dados
         try:
-            # Verificar se email já está cadastrado
-            if dao.obter_por_email(email):
-                flash('Email já cadastrado', 'error')
-                return redirect(url_for('user_bp.register'))
+            usuario_dao.incluir(novo_usuario)
+            flash('Cadastro realizado com sucesso!', 'success')
 
-            dao.incluir(novo_usuario)
-            flash('Usuário registrado com sucesso!', 'success')
-            return redirect(url_for('user_bp.login'))  # Redirecionar para o endpoint 'login' do Blueprint 'user_bp'
+            # Autentica o usuário após o registro
+            login_user(novo_usuario)
 
-        except IntegrityError as e:
-            flash(f'Erro ao registrar usuário: {str(e)}', 'error')
-            return redirect(url_for('user_bp.register'))
-
+            return redirect(url_for('user_bp.login'))  # Redireciona para o perfil do usuário após o registro
         except Exception as e:
-            flash(f'Erro ao registrar usuário: {str(e)}', 'error')
+            flash('Erro ao cadastrar usuário. Tente novamente.', 'error')
             return redirect(url_for('user_bp.register'))
 
-        finally:
-            dao.close()
+    return render_template('login.html')
 
-    # Se o método HTTP não for POST (pode ser GET), renderizar o formulário de registro
-    return render_template('cadastro.html')
-
-@user_bp.route('/login', methods=['POST', 'GET'])
+@user_bp.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         email = request.form['email']
         senha = request.form['senha']
 
-        dao = UsuarioDAO()
-        try:
-            usuario = dao.obter_por_email(email)
+        # Verificar se o email e senha estão presentes
+        if email and senha:
+            # Buscar o usuário pelo email
+            usuario = Usuario.query.filter_by(email=email).first()
 
-            if usuario and usuario.senha == senha:  # Verifica a senha (sem hash)
-                session['usuario_id'] = usuario.id
-                session['usuario_nome'] = usuario.nome
-                session['tipo_usuario'] = usuario.tipo_usuario  # Agora o tipo de usuário é recuperado do banco de dados
-                flash('Login realizado com sucesso!', 'success')
-                return redirect(url_for('page_bp.index'))  # Redireciona para a página inicial após o login
+            # Verificar se o usuário existe e a senha está correta
+            if usuario and usuario.senha == senha:
+                # Autenticar o usuário usando Flask-Login
+                login_user(usuario)
 
-            else:
-                flash('Credenciais inválidas. Verifique seu email e senha.', 'error')
-                return redirect(url_for('user_bp.login'))
+                # Redirecionar para a página após o login
+                # Aqui você pode redirecionar para a página inicial do usuário, por exemplo
+                return redirect(url_for('page_bp.index'))
 
-        except Exception as e:
-            flash(f'Erro ao realizar login: {str(e)}', 'error')
-            return redirect(url_for('user_bp.login'))
+            # Se o email ou senha estiverem incorretos
+            flash('Credenciais inválidas. Verifique seu email e senha.', 'error')
 
-        finally:
-            dao.close()
+        else:
+            flash('Por favor, forneça seu email e senha.', 'error')
 
-    # Se o método HTTP for GET, renderize o formulário de login
+    # Se for método GET ou se houver um erro de login, renderizar o formulário de login
     return render_template('login.html')
-
 
 @user_bp.route('/logout')
 def logout():
-    # Limpar sessão
-    session.clear()
-    flash('Logout realizado com sucesso!', 'success')
-    return redirect(url_for('page_bp.index'))
+    # Utiliza o método do Flask-Login para deslogar o usuário
+    logout_user()
+
+    # Flash message opcional para informar o usuário que ele foi deslogado com sucesso
+    flash('Você foi deslogado com sucesso.', 'success')
+
+    # Redireciona para a página de login, ou para onde desejar após o logout
+    return redirect(url_for('user_bp.login'))
+    

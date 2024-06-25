@@ -11,11 +11,12 @@
       <p class="card-text">Descrição: {{ produto.descricao }}</p>
       <p class="card-text">Ingredientes: {{ produto.ingrediente }}</p>
       <p class="card-text">Preço R$ {{ produto.preco }}</p>
-      <!-- Adicionando o formulário para adicionar ao carrinho -->
-      <form class="addToCartForm" action="{{ url_for('cesta_bp.add_to_cart') }}" method="POST" id="carrinhoForm">
+      
+      <!-- Formulário para adicionar ao carrinho -->
+      <form class="addToCartForm" action="{{ url_for('carrinho_bp.criando') }}" method="POST" id="carrinhoForm">
         <input type="hidden" name="produto_id" value="{{ produto.id }}">
         <input type="hidden" name="quantidade" id="quantity_hidden" value="0">
-        <input type="hidden" name="totalPrice" id="totalPrice_hidden" value="0">
+        <input type="hidden" name="preco_total" id="preco_total_hidden" value="0">
         
         <h5 class="card-title"> Produto </h5>
         <table>
@@ -88,7 +89,7 @@
     }
 
     // Atualiza o valor de totalPriceInput quando totalPriceDisplay é alterado
-    var totalPriceInput = document.getElementById('totalPrice_hidden');
+    var totalPriceInput = document.getElementById('preco_total_hidden');
     totalPriceInput.value = total.toFixed(2);
   }
 
@@ -106,7 +107,7 @@
     }
 
     // Atualiza o valor de totalPriceInput quando totalPriceDisplay é alterado
-    var totalPriceInput = document.getElementById('totalPrice_hidden');
+    var totalPriceInput = document.getElementById('preco_total_hidden');
     totalPriceInput.value = totalPrice.toFixed(2);
   }
 </script>

@@ -19,6 +19,12 @@ class UsuarioDAO:
         if usuario:
             db.session.delete(usuario)
             db.session.commit()
+            
+    def nome_completo(self, nome, sobrenome):
+        return f"{nome} {sobrenome}"
+
+    def endereco_completo(self, endereco, numero_casa, complemento, bairro, telefone):
+        return f"{endereco} - {numero_casa} - {complemento} - {bairro} - {telefone}"
 
     def obter_todos(self):
         return Usuario.query.all()

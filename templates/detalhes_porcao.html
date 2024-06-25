@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Detalhe do Bebida{% endblock %}
+{% block title %}Detalhe do Produto{% endblock %}
 
 {% block content %}
 <div id="main-container" class="container-fluidProdutos">
@@ -11,13 +11,14 @@
       <p class="card-text">Descrição: {{ produto.descricao }}</p>
       <p class="card-text">Ingredientes: {{ produto.ingrediente }}</p>
       <p class="card-text">Preço R$ {{ produto.preco }}</p>
-      <!-- Adicionando o formulário para adicionar ao carrinho -->
-      <form class="addToCartForm" action="" method="POST" id="carrinhoForm">
+      
+      <!-- Formulário para adicionar ao carrinho -->
+      <form class="addToCartForm" action="{{ url_for('carrinho_bp.criando') }}" method="POST" id="carrinhoForm">
+        {% if current_user.is_authenticated %}
         <input type="hidden" name="produto_id" value="{{ produto.id }}">
         <input type="hidden" name="quantidade" id="quantity_hidden" value="0">
-        <input type="hidden" name="totalPrice" id="totalPrice_hidden" value="0">
-        
-        <h5 class="card-title"> Produto  </h5>
+        <input type="hidden" name="preco_total" id="preco_total_hidden" value="0">
+        <h5 class="card-title"> Produto </h5>
         <table>
           <thead>
             <tr>
@@ -45,69 +46,14 @@
         </table>
         
         <label for="observacao">Observação:</label>
-        <textarea id="observacao" name="observacao" rows="5" class="form-control" ></textarea>
+        <textarea id="observacao" name="observacao" rows="5" class="form-control" required placeholder="Faça uma Observação do seu pedido"></textarea>
+        {% endif %}
         
-        <button type="submit" id="addToCartButton" class="card-btn">Adicionar ao Carrinho Por: R$ 0.00</button>
+        <button type="submit" id="addToCartButton" class="card-btn">Adicionar ao Carrinho{% if not current_user.is_authenticated %} (Login Requerido){% endif %} Por: R$ 0.00</button>
       </form>
     </div>
   </div>
 </div>
 
-<script>
-  function increment(productName) {
-    var quantityElement = document.getElementById("quantity_" + productName);
-    var quantityInput = document.getElementById("quantity_hidden");
-    var currentValue = parseInt(quantityElement.innerText);
-    quantityElement.innerText = currentValue + 1;
-    quantityInput.value = currentValue + 1;
-    updateTotalPrice(productName);
-  }
-
-  function decrement(productName) {
-    var quantityElement = document.getElementById("quantity_" + productName);
-    var quantityInput = document.getElementById("quantity_hidden");
-    var currentValue = parseInt(quantityElement.innerText);
-    if (currentValue > 0) {
-      quantityElement.innerText = currentValue - 1;
-      quantityInput.value = currentValue - 1;
-      updateTotalPrice(productName);
-    }
-  }
-
-  function updateTotalPrice(productName) {
-    var precoUnitario = parseFloat(document.getElementById('value_' + productName).value);
-    var quantidade = parseInt(document.getElementById('quantity_' + productName).innerText);
-    var total = precoUnitario * quantidade;
-    document.getElementById('totalPrice_' + productName).innerText = 'R$ ' + total.toFixed(2);
-
-    // Atualiza o valor total no botão "Adicionar ao Carrinho"
-    var addToCartButton = document.getElementById('addToCartButton');
-    if (addToCartButton) {
-      var buttonText = `Adicionar ao Carrinho Por: R$ ${total.toFixed(2)}`;
-      addToCartButton.textContent = buttonText;
-    }
-
-    // Atualiza o valor de totalPriceInput quando totalPriceDisplay é alterado
-    var totalPriceInput = document.getElementById('totalPrice_hidden');
-    totalPriceInput.value = total.toFixed(2);
-  }
-
-  function calculateTotal() {
-    var totalPrice = 0;
-    document.querySelectorAll('[id^="totalPrice_"]').forEach(function(element) {
-      totalPrice += parseFloat(element.innerText.replace('R$ ', ''));
-    });
-
-    // Atualiza o valor total no botão "Adicionar ao Carrinho"
-    var addToCartButton = document.getElementById('addToCartButton');
-    if (addToCartButton) {
-      var buttonText = `Adicionar ao Carrinho Por: R$ ${totalPrice.toFixed(2)}`;
-      addToCartButton.textContent = buttonText;
-    }
-
-    // Atualiza o valor de totalPriceInput quando totalPriceDisplay é alterado
-    var totalPriceInput = document.getElementById('totalPrice_hidden');
-    totalPriceInput.value = totalPrice.toFixed(2);
-  }
-</script>
+<script src="../static/JS/produtos.js"></script>
 {% endblock %}
