@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Histórico de Pedidos{% endblock %}
+
+{% block content %}
+<div id="main-container" class="container-fluid">
+    <h2 class="page-title">Pedidos</h2>
+    <p class="section-description">Confira aqui seus pedidos</p>
+    <div class="col-md-12" id="carrinho-dashboard">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th  style="center" scope="col">Pedido</th>
+                    <th scope="col">Nome</th>                    
+                    <th scope="col">Observação</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Total</th>
+                    <th scope="col" nowrap>Forma de Pagamento</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for pedido in pedidos %}
+                <tr>
+                    <td style="vertical-align: middle;"  nowrap scope="row">{{ pedido.id }}</td>
+                        <td style="vertical-align: middle;">{{ pedido.itens_comprados }}</td>
+                        <td style="vertical-align: middle;">{{ pedido.observacao }}</td>
+                        <td style="vertical-align: middle;" nowrap>{{ pedido.status }}</td>
+                        <td style="vertical-align: middle;" nowrap>R$ {{ pedido.valor_total }}</td>
+                        <td style="vertical-align: middle;" class="actions-column"> {{ pedido.forma_pagamento }}  </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

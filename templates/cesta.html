@@ -64,7 +64,7 @@
                 <!-- Nova linha para o botão "Criar Pedido" -->
                 <tr>
                     <td colspan="7">
-                        <form id="form-criar-pedido" action="" method="POST">
+                        <form id="form-criar-pedido" action="{{ url_for('pedido_bp.criar_pedido') }}" method="POST">
                             <input type="hidden" name="type" value="criarPedido">
 
                             <!-- Label "Forma de Pagamento" com pequeno espaço à esquerda -->
@@ -91,7 +91,7 @@
                             <!-- Botão para criar o pedido -->
                             <div class="col-md-12">
                                 <button id="pedido-btn" type="submit" class="delete-btn card-btn">
-                                    <i class='bx bx-cart'></i> <span id="total-carrinho">Criar Pedido por R$ {{ total_carrinho }}</span>
+                                    <i class='bx bx-cart'></i> <span id="total_carrinho">Criar Pedido por R$ {{ total_carrinho }}</span>
                                 </button>
                             </div>
                         </form>

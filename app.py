@@ -17,6 +17,7 @@ from controller.page_controller import page_bp
 from controller.ProdutoController import produto_bp
 from controller.CarrinhoController import cesta_bp
 from controller.CestaControlle import carrinho_bp
+from controller.PedidoController import pedido_bp
 # Criando a instância do aplicativo Flask
 app = Flask(__name__)
 
@@ -41,6 +42,7 @@ db.init_app(app)
 # Registro dos Blueprints
 app.register_blueprint(page_bp, name='page_bp')
 app.register_blueprint(carrinho_bp, name='carrinho_bp')
+app.register_blueprint(pedido_bp,name= 'pedido_bp')
 app.register_blueprint(cesta_bp, url_prefix='/user', name='cesta_bp')
 app.register_blueprint(user_blueprint, url_prefix='/user', name='user_bp')
 app.register_blueprint(admin_blueprint, url_prefix='/admin', name='admin_bp')

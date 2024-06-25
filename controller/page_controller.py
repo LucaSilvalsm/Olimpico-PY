@@ -7,7 +7,9 @@ from dao.ProdutoDAO import ProdutoDAO
 from dao.CarrinhoDAO import CarrinhoDAO
 from dao.UsuarioDAO import UsuarioDAO
 from Model.Usuario import Usuario
-from flask_login import current_user
+from flask_login import current_user,login_required
+from Model.Pedido import Pedido
+from dao.PedidoDAO import PedidoDAO
 
 
 page_bp = Blueprint('page_bp', __name__)
@@ -74,6 +76,21 @@ def cadastro():
     print("Acessando a rota /cadastro")
     return render_template('cadastro.html')
 
+
+@page_bp.route('/pedidos' , methods = ['GET'])
+@login_required
+def pedidos():
+    try:
+        pedido_dao = PedidoDAO()
+        # Obter todos os pedidos do usuário atual
+        pedidos = pedido_dao.obter_pedidos_por_usuario_id(current_user.id)
+        
+        # Renderizar o template 'pedidos.html' passando a lista de pedidos
+        return render_template('pedidos.html', pedidos=pedidos)
+    
+    except Exception as e:
+        # Em caso de erro, trate de acordo com sua lógica de manipulação de erros
+        return render_template('error.html', error=str(e))
 @page_bp.route('/cesta', methods=['GET'])
 def cesta():
     if current_user.is_authenticated:
