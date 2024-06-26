@@ -27,3 +27,5 @@ def __init__(self, usuario_id, forma_pagamento, endereco_entrega, status, valor_
             observacoes_itens.append(observacao_item)
 
         self.observacao += "\n" + "\n".join(observacoes_itens)  # Adicionar observações dos itens ao campo observacao
+        
+        

@@ -61,3 +61,20 @@ class UsuarioAdmin(db.Model):
         self.sobrenome = sobrenome
         self.email = email
         self.senha = senha
+    def get_id(self):
+        return str(self.id)
+
+    @property
+    def is_active(self):
+        # Aqui, você pode adicionar lógica para verificar se o usuário está ativo.
+        # Por exemplo, se você tiver um campo `ativo` no banco de dados:
+        # return self.ativo
+        return True
+
+    @property
+    def is_authenticated(self):
+        return True
+
+    @property
+    def is_anonymous(self):
+        return False

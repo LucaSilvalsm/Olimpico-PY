@@ -7,6 +7,7 @@ from dao.ProdutoDAO import ProdutoDAO
 carrinho_dao = CarrinhoDAO()
 produto_dao = ProdutoDAO()
 
+
 carrinho_bp = Blueprint('carrinho_bp', __name__)
 
 @carrinho_bp.route('/criando' , methods = ['POST'])

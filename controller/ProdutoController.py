@@ -3,6 +3,8 @@ from werkzeug.utils import secure_filename
 import os
 from Model.Produto import Produto
 from dao.ProdutoDAO import ProdutoDAO
+from Model.Pedido import Pedido
+from dao.PedidoDAO import PedidoDAO
 
 # Configuração do Flask
 app = Flask(__name__)
@@ -104,3 +106,5 @@ app.register_blueprint(produto_bp)
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+

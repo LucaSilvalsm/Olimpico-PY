@@ -1,0 +1,57 @@
+{% extends 'admin/base.html' %}
+
+{% block content %}
+<div id="main-container" class="container-fluid">
+   
+<div id="dashboard-container" class="dashboard-fluid">
+    <h2 class="dashboard-title">Pedidos</h2>
+    <p class="dashboard-description">Confira aqui</p>
+    <div class="col-md-12" id="add-carrinho-container">
+        <div class="col-md-12" id="carrinho-dashboard">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Itens Comprados</th> <!-- Ajustado para melhor refletir o que será mostrado -->
+                        <th scope="col">Observação</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Total</th>
+                        <th scope="col" nowrap>Forma de Pagamento</th>
+                        <th scope="col" class="actions-column">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for pedido in pedidos %}
+                    <tr>
+                        <td style="vertical-align: middle;" scope="row">{{ pedido.id }}</td>
+                        <td style="vertical-align: middle;">{{ pedido.itens_comprados }}</td> <!-- Exibindo os itens comprados -->
+                        <td style="vertical-align: middle;">{{ pedido.observacao }}</td>
+                        <td style="vertical-align: middle;">
+                            <select name="status_pedido" class="status-select" data-pedido-id="{{ pedido.id }}">
+                                <option value="Preparando" {% if pedido.status == 'Preparando' %} selected {% endif %}>Preparando</option>
+                                <option value="Saiu para entrega" {% if pedido.status == 'Saiu para entrega' %} selected {% endif %}>Saiu para Entrega</option>
+                                <option value="Entregue" {% if pedido.status == 'Entregue' %} selected {% endif %}>Entregue</option>
+                                <option value="Cancelado" {% if pedido.status == 'Cancelado' %} selected {% endif %}>Cancelado</option>
+
+                            </select>
+                        </td>
+                        <td style="vertical-align: middle;" nowrap>R$ {{ pedido.valor_total }}</td>
+                        <td style="vertical-align: middle;">{{ pedido.forma_pagamento }}</td>
+                        <td style="vertical-align: middle;" class="action">
+                            <!--Editar-->
+                            <a href="#" class="edit-link" data-pedido-id="{{ pedido.id }}"><i class="fas fa-edit edit-icon"></i></a>
+                            <input type="hidden" name="id" value="{{ pedido.id }}">
+                            <form class="delete-form" action="" method="POST">
+                                <input type="hidden" name="type" value="delete">
+                                <input type="hidden" name="id" value="{{ pedido.id }}">
+                                <button type="submit" class="delete-btn"><i class="fas fa-times delete-icon"></i></button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

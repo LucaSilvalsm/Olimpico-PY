@@ -31,7 +31,12 @@ header {
     display: flex;
     justify-content: space-around;
 
-
+}
+th{
+  text-align: justify;
+}
+td{
+  text-align: justify;
 }
 .logo{
     margin-top: 8px;

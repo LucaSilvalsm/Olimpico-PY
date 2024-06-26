@@ -27,11 +27,11 @@ def criar_pedido():
         # Montar a lista de itens comprados no formato desejado
         for item in itens_carrinho:
             # Formatar cada item do carrinho para observacao_item
-            descricao_item = f"{item.nome_produto}  - Observação: {item.observacao}"
+            descricao_item = f"{item.nome_produto}  - Observação: {item.observacao} \n"
             observacao_item.append(descricao_item)
 
             # Formatar cada item do carrinho para itens_comprados
-            item_comprado = f"{item.nome_produto} - Quantidade: {item.quantidade}"
+            item_comprado = f"{item.nome_produto} - Quantidade: {item.quantidade}\n"
             itens_comprados.append(item_comprado)
 
         # Calcular o valor total do pedido
@@ -49,7 +49,7 @@ def criar_pedido():
             usuario_id=current_user.id,
             forma_pagamento=forma_pagamento,
             endereco_entrega=endereco_completo,
-            status='PENDENTE',  # Defina o status inicial do pedido
+            status='Preparando',  # Defina o status inicial do pedido
             valor_total=valor_total,
             observacao='\n'.join(observacao_item),  # Concatenar todas as observações dos itens
             itens_comprados='\n'.join(itens_comprados)  # Concatenar todos os itens comprados
@@ -64,3 +64,6 @@ def criar_pedido():
     except Exception as e:
         flash(f'Erro ao criar pedido: {str(e)}', 'error')
         return redirect(url_for('page_bp.index'))
+    
+    
+            
