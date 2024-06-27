@@ -4,6 +4,8 @@ from sqlalchemy.exc import IntegrityError
 from dao.UsuarioAdminDAO import UsuarioAdminDAO
 from Model.Usuario import UsuarioAdmin
 from Model.config import DATABASE
+from Model.Pedido import Pedido
+from dao.PedidoDAO import PedidoDAO
 
 DB_URL = f"postgresql://{DATABASE['username']}:{DATABASE['password']}@{DATABASE['host']}:{DATABASE['port']}/{DATABASE['database']}"
 
@@ -94,7 +96,17 @@ def login():
 def dashboard():
     # Verificar se o usuário é administrador
     if 'tipo_usuario' in session and session['tipo_usuario'] == 'Administrador':
-        return render_template('./admin/painel.html')
+        pedido_dao = PedidoDAO()
+        pedidos = pedido_dao.obter_ultimos_10_pedidos()
+        
+        valor_total = pedido_dao.calcular_valor_total_dos_pedidos()
+        
+        media_valor = pedido_dao.calcular_media_dos_pedidos()
+        
+        quantidade_pedido = pedido_dao.contar_quantidade_de_pedidos()
+        
+        print("Acessando a rota /painel")
+        return render_template('./admin/painel.html', pedidos=pedidos, valor_total=valor_total, quantidade_pedido=quantidade_pedido, media_valor=media_valor)
     else:
         flash('Acesso negado.', 'error')
         return redirect(url_for('admin_bp.login'))

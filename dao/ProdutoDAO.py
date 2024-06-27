@@ -54,7 +54,7 @@ class ProdutoDAO:
         return secrets.token_hex(60) + ".jpg"
     
     def todas_categorias(self):
-        categorias = ["Artesanal", "Tradicional", "Bebida", "Porção", "Sobremesa"]
+        categorias = ["Artesanal", "Tradicional", "Bebida", "Porcao", "Sobremesa"]
         produtos_por_categoria = {}
 
         for categoria in categorias:
