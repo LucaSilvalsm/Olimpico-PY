@@ -1,9 +1,10 @@
-from flask import Blueprint, request, redirect, url_for, flash
+from flask import Blueprint, request, redirect, url_for, flash,jsonify
 from flask_login import login_required, current_user
 from Model.Pedido import Pedido
 from dao.UsuarioDAO import UsuarioDAO
 from dao.PedidoDAO import PedidoDAO
 from dao.CarrinhoDAO import CarrinhoDAO
+from Model import db
 
 usuario_dao = UsuarioDAO()
 pedido_dao = PedidoDAO()
@@ -65,5 +66,20 @@ def criar_pedido():
         flash(f'Erro ao criar pedido: {str(e)}', 'error')
         return redirect(url_for('page_bp.index'))
     
-    
-            
+@pedido_bp.route('/atualizar', methods=['POST'])
+def atualizar():
+    pedido_id = request.form.get('id')
+    novo_status = request.form.get('status')
+
+    # Log para verificar o que está sendo recebido
+    print(f'Pedido ID: {pedido_id}, Novo Status: {novo_status}')
+
+    # Lógica para atualizar o status no banco de dados
+    pedido = Pedido.query.get(pedido_id)
+    flash('Pedido Atualizado com sucesso', 'success')
+    if pedido:
+        pedido.status = novo_status
+        db.session.commit()
+        return jsonify({'status': 'success'}), 200
+    else:
+        return jsonify({'status': 'error', 'message': 'Pedido não encontrado'}), 404

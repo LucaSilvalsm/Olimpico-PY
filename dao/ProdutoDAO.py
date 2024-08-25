@@ -47,8 +47,8 @@ class ProdutoDAO:
         
         return Produto.query.filter_by(tipo_produto=tipo_produto).all()
     
-    def obter(self, chave):
-        return Produto.query.get(chave)
+    def obter(self, produto_id):
+        return Produto.query.get(produto_id)
     
     def image_generate_name(self):
         return secrets.token_hex(60) + ".jpg"

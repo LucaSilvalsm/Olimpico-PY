@@ -1,8 +1,18 @@
 {% extends "base.html" %}
 
 {% block title %}Página Inicial - Hamburgueria{% endblock %}
-
+  {% set messages = get_flashed_messages(with_categories=True) %}
+  {% if messages %}
+      <div class="msg-container">
+          {% for category, message in messages %}
+              <div class="msg {{ category }}">
+                  {{ message }}
+              </div>
+          {% endfor %}
+      </div>
+  {% endif %}
 {% block content %}
+
 <div id="main-container" class="container-fluid">
   <div class="category-section">
     <h2 class="page-title">Hamburgueres Artesanal</h2>
@@ -19,6 +29,16 @@
 </div>
 
 <div id="main-container" class="container-fluid">
+  {% set messages = get_flashed_messages(with_categories=True) %}
+  {% if messages %}
+      <div class="msg-container">
+          {% for category, message in messages %}
+              <div class="msg {{ category }}">
+                  {{ message }}
+              </div>
+          {% endfor %}
+      </div>
+  {% endif %}
   <div class="category-section">
     <h2 class="page-title">Hamburgueres Tradicional</h2>
     <p class="section-description">Veja os hambúrgueres tradicionais disponíveis:</p>
@@ -47,7 +67,6 @@
     </div>
   </div>
 </div>
-
 <div id="main-container" class="container-fluid">
   <div class="category-section">
     <h2 class="page-title">Bebidas</h2>
@@ -58,6 +77,20 @@
       {% endfor %}
       {% if bebidas|length == 0 %}
         <p class="empty-list">Ainda não há bebidas cadastrados!</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+<div id="main-container" class="container-fluid">
+  <div class="category-section">
+    <h2 class="page-title">Sobremesa</h2>
+    <p class="section-description">Veja as sobremesas disponíveis:</p>
+    <div class="movies-container">
+      {% for produto in sobremesa %}
+        {% include 'sobremesa.html' %}
+      {% endfor %}
+      {% if sobremesa|length == 0 %}
+        <p class="empty-list">Ainda não há sobremesas cadastrados!</p>
       {% endif %}
     </div>
   </div>

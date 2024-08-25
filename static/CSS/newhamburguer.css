@@ -5,13 +5,7 @@ body {
 
 
 
-.form-right, .form-left {
-  width: 48%; /* Ajuste conforme necessário */
-  border: 3px solid black; /* Adiciona uma borda cinza de 1px */
-  padding: 20px; /* Adiciona um preenchimento interno de 20px */
-  box-sizing: border-box; /* Garante que a largura da borda esteja incluída na largura total */
-}
-Com es
+
 /* Estilos adicionais conforme necessário */
 
 h2 {
@@ -54,13 +48,15 @@ select::-ms-expand {
 .ingrediente,.tamanho {
   display: flex;
   flex-wrap: wrap;
-  text-align: center;
+  text-align: left;
 }
 
 input[type="checkbox"] {
   width: 50px;
   height: 20px;
   margin-right: 0px;
+  text-align: left;
+  
 }
 
 input[type="submit"] {
@@ -78,70 +74,14 @@ input[type="submit"]:hover {
   background-color: rgb(255, 196, 0);
 }
 
-
-
-
-@media screen and (max-width: 768px) {
-  .page-title{
-    width: 100px;
-   font-size: 20px;
-   text-align: center;
-  }
-  .form-container {
-    flex-direction: column; /* Altera a direção do flex para coluna */
-  }
-
-  .form-left,
-  .form-right {
-    width: 100%; /* Define a largura para 100% */
-    margin-bottom: 20px; /* Adiciona margem inferior para separar os formulários */
-  }
-  input[type="checkbox"] {
-    width: 40px;
-    height: 20px;
-    margin-right: 0px;
-  }
+#porcao {
+  text-align: left; /* Alinha o texto à esquerda dentro da div */
+  /* Se quiser ajustar o alinhamento dos checkboxes e labels também, você pode usar: */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
-@media screen and (max-width: 964px) {
-  .page-title{
-    width: 300px;
-    font-size: 20px;
-    text-align: center;
-   }
-  .form-container {
-    flex-direction: column; /* Altera a direção do flex para coluna */
-  }
-
-  .form-left,
-  .form-right {
-    width: 100%; /* Define a largura para 100% */
-    margin-bottom: 20px; /* Adiciona margem inferior para separar os formulários */
-  }
-  input[type="checkbox"] {
-    width: 40px;
-    height: 20px;
-    margin-right: 0px;
-  }
-}
-@media screen and (max-width: 1200px) {
-  .page-title{
-    width: 300%;
-    font-size: 20px;
-    text-align: center;
-   }
-  .form-container {
-    flex-direction: column; /* Altera a direção do flex para coluna */
-  }
-
-  .form-left,
-  .form-right {
-    width: 100%; /* Define a largura para 100% */
-    margin-bottom: 20px; /* Adiciona margem inferior para separar os formulários */
-  }
-  input[type="checkbox"] {
-    width: 40px;
-    height: 20px;
-    margin-right: 0px;
-  }
+#porcao input[type="checkbox"] {
+  margin-right: 5px; /* Ajuste a margem para o lado direito do checkbox */
 }

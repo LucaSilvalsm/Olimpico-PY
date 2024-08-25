@@ -24,7 +24,9 @@
    <link rel="stylesheet" href="/static/CSS/login.css">
 </head>
 <body>
+
   <header>
+    
     <nav id="main-navbar" class="navbar navbar-expand-lg">
       <a href="/" class="navbar-brand">
         <img src="/static/img/logo.png" alt="logo" id="logo">
@@ -66,9 +68,19 @@
       </div>
     </nav>
   </header>
-
+  {% set messages = get_flashed_messages(with_categories=True) %}
+  {% if messages %}
+  <div class="msg-container">
+      {% for category, message in messages %}
+      <div class="msg {{ category }}">
+          {{ message }}
+      </div>
+      {% endfor %}
+  </div>
+  {% endif %}
   <div class=""> <!-- Use 'container' ou 'container-fluid' conforme o layout desejado -->
     {% block content %}
+    
     {% endblock %}
   </div>
 
@@ -115,20 +127,34 @@
               
           </div>
       </div>
-
+           
+      
       <div class="rodape-div-4">
-          <div class="rodape-div-4-coluna">
-              <!-- elemento -->
-              <div class="elementoFooter">
-                <span><h3 class="title-footer" >Forma de Contato</h3></span>
+        <div class="rodape-div-4-coluna">
+            <!-- elemento -->
+            <div class="elementoFooter">
+                <span>
+                    <h3 class="title-footer">Desenvolvedor</h3>
+                </span>
                 <div class="social-midia">
-                  <p> <a href="#"><i class="fab fa-facebook-square"></i> Olimpica Hamburgueria</a></p>
-                  <p> <a href="#"><i class="fab fa-instagram"></i> Olimpica Hamburgueria</a> </p>
-                  <p> <a href="#"><i class="fab  fa-whatsapp"></i> Whatsap: (21) 99343-xxxx</a></p>
                 </div>
-              </div>
-          </div>
-      </div>
+
+                <p class="contact-text">
+                    <i id="email" class="fa fa-envelope" style="margin-right: 5px;"></i>Email:
+                    lukas.silvalsm@hotmail.com
+                </p>
+                <p class="contact-text">
+                    <i class='bx bxl-github' style="margin-right: 5px;"></i>Github: <a
+                        href="https://github.com/LucaSilvalsm">LucaSilvalsm</a>
+                </p>
+                <p class="contact-text">
+                    <i class='bx bxl-linkedin-square' style="margin-right: 5px;"></i>Linkedin: <a
+                        href="https://www.linkedin.com/in/lucas-da-silva-moreira/">Lucas Da Silva
+                        Moreira</a>
+                </p>
+            </div>
+        </div>
+    </div>
 
   </div>
   <p class="rodape-direitos">Copyright © 2023 – Todos os Direitos Reservados.</p>
@@ -137,7 +163,7 @@
 
 
 </body>
-  </footer>
+ 
 
   <!-- Bootstrap JS e outros scripts -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

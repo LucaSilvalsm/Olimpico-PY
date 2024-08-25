@@ -6,6 +6,7 @@ from Model.Usuario import UsuarioAdmin
 from Model.config import DATABASE
 from Model.Pedido import Pedido
 from dao.PedidoDAO import PedidoDAO
+from flask_login import login_required,login_user
 
 DB_URL = f"postgresql://{DATABASE['username']}:{DATABASE['password']}@{DATABASE['host']}:{DATABASE['port']}/{DATABASE['database']}"
 
@@ -76,6 +77,7 @@ def login():
                 session['usuario_nome'] = usuario_admin.nome
                 session['tipo_usuario'] = 'Administrador'  # Definindo o tipo de usuário como 'Administrador'
                 flash('Login realizado com sucesso!', 'success')
+                login_user(usuario_admin)
                 return redirect(url_for('admin_bp.dashboard'))  # Redireciona para o dashboard após o login
 
             else:
@@ -93,6 +95,8 @@ def login():
 
 
 @admin_bp.route('/dashboard')
+
+
 def dashboard():
     # Verificar se o usuário é administrador
     if 'tipo_usuario' in session and session['tipo_usuario'] == 'Administrador':

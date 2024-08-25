@@ -29,38 +29,15 @@ def index():
     tradicionais = produto_dao.tipo_produto("Tradicional")
     bebidas = produto_dao.tipo_produto("Bebida")
     porcao = produto_dao.tipo_produto("Porcao")
+    sobremesa = produto_dao.tipo_produto("Sobremesa")
     print("Acessando a rota /")
     print(artesanais)  # Apenas para debug, para verificar se os produtos foram obtidos corretamente
-    return render_template("index.html", artesanais=artesanais,tradicionais=tradicionais,bebidas=bebidas, porcao=porcao)
+    return render_template("index.html", artesanais=artesanais,tradicionais=tradicionais,bebidas=bebidas, porcao=porcao,sobremesa=sobremesa)
 
 
 @page_bp.route('/login', methods=['POST', 'GET'])
 def login():
-    if request.method == 'POST':
-        email = request.form['email']
-        senha = request.form['senha']
-
-        dao = UsuarioDAO()
-        try:
-            usuario = dao.obter_por_email(email)
-
-            if usuario and usuario.senha == senha:  # Verifica a senha (sem hash)
-                session['usuario_id'] = usuario.id
-                session['usuario_nome'] = usuario.nome
-                session['tipo_usuario'] = usuario.tipo_usuario  # Agora o tipo de usuário é recuperado do banco de dados
-                flash('Login realizado com sucesso!', 'success')
-                return redirect(url_for('page_bp.index'))  # Redireciona para a página inicial após o login
-
-            else:
-                flash('Credenciais inválidas. Verifique seu email e senha.', 'error')
-                return redirect(url_for('page_bp.login'))
-
-        except Exception as e:
-            flash(f'Erro ao realizar login: {str(e)}', 'error')
-            return redirect(url_for('page_bp.login'))
-
-        finally:
-            dao.close()
+    
 
     # Se o método HTTP for GET, renderize o formulário de login
     return render_template('login.html')
@@ -71,7 +48,7 @@ def admin_login():
 
 
 
-@page_bp.route("/cadastro")
+@page_bp.route("/cadastro/usuario")
 def cadastro():
     print("Acessando a rota /cadastro")
     return render_template('cadastro.html')
@@ -92,6 +69,8 @@ def pedidos():
         # Em caso de erro, trate de acordo com sua lógica de manipulação de erros
         return render_template('error.html', error=str(e))
 @page_bp.route('/cesta', methods=['GET'])
+@login_required
+
 def cesta():
     if current_user.is_authenticated:
         usuario_id = current_user.id  # Obtém o ID do usuário autenticado
@@ -138,6 +117,8 @@ def painel():
     return render_template('./admin/painel.html', pedidos=pedidos, valor_total=valor_total, quantidade_pedido=quantidade_pedido, media_valor=media_valor)
 
 @page_bp.route('/todo_pedidos')
+
+
 def todos_pedidos():
     pedido_dao = PedidoDAO()
     
@@ -151,10 +132,12 @@ def todos_pedidos():
     
     
 @page_bp.route('/dashboard')
+
+
 def dashboard():
     return render_template('/admin/painel.html')
 
-@page_bp.route("/produto")
+@page_bp.route("/admin/newproduto")
 def produto():
     print("Acessando a rota /produto")
     return render_template('./admin/newproduto.html')
@@ -183,6 +166,8 @@ def criando_teste():
 ##Testando o detalhe pedido  ## As rotas dos pedidos
 
 @page_bp.route("/produto/<int:produto_id>", methods=['GET'])
+@login_required
+
 def detalhes_produto(produto_id):
     produto_dao = ProdutoDAO()
     produto = produto_dao.get_produto_by_id(produto_id)
@@ -192,6 +177,8 @@ def detalhes_produto(produto_id):
     return render_template('detalhes_produto.html', produto=produto)
 #detalhe porcao
 @page_bp.route('/porcao/<int:produto_id>', methods=['GET'])
+@login_required
+
 def detalhes_porcao(produto_id):
     # Verificar se o usuário está logado
     if 'usuario_id' not in session:
@@ -211,6 +198,7 @@ def detalhes_porcao(produto_id):
 
 
 @page_bp.route('/bebidas/<int:produto_id>', methods=['GET'])
+@login_required
 def detalhes_bebida(produto_id):
     produto_dao = ProdutoDAO()
     produto = produto_dao.get_produto_by_id(produto_id)

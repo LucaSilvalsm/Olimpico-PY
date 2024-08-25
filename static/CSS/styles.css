@@ -229,7 +229,7 @@ body{
 }
 
 .msg.success {
-  color: burlywood;
+  color: black;
   background-color: #D1E7DD;
   border-color: #BADBCC;
 }

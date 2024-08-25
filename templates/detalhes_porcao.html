@@ -3,6 +3,16 @@
 {% block title %}Detalhe do Produto{% endblock %}
 
 {% block content %}
+{% set messages = get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+        <div class="msg-container">
+            {% for category, message in messages %}
+            <div class="msg {{ category }}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
 <div id="main-container" class="container-fluidProdutos">
   <div class="card produto-card-produtos">
     <div class="card-img-top-produtos" style="background-image: url('{{ url_for('static', filename='img/produtos/' + produto.imagem) }}')"></div>

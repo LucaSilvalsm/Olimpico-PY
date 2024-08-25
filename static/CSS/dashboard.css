@@ -84,7 +84,8 @@ td{
 .sidebar {
     width: 20%;
     background-color: #F5C518;
-    min-height: 100%;
+    min-height: 80%;
+    margin-bottom: -20px;
 
 }
 .sidebar a.sidebar-active{
@@ -151,9 +152,19 @@ hr {
   margin: 0 auto;
   padding-top: 7px;
 }
+.wide-container {
+    max-width: 1200px; /* Defina a largura máxima desejada */
+    width: 100%; /* Faz com que o container use toda a largura disponível */
+    margin: 0 auto; /* Centraliza o container */
+}
+
 .dashboard-fluid{
   border-radius: 50px solid black;
+  
  
+}
+.container-pedido{
+  width: 80%;
 }
 .dashboard-title {
   text-align: center;
@@ -171,6 +182,12 @@ hr {
   text-align: center;
 
 }
+.status-select{
+  width: 130px;
+  font-size: 12px;
+  font-weight: bolder;
+}
+
 .box-info {
     width: 100%;
     margin-top: 20px;
@@ -223,7 +240,8 @@ body {
   }
   
   .form-container {
-    max-width: 1300px;
+    width: 1300x;
+    height: 75%;
     margin: 50px auto;
     padding: 20px;
     background-color: rgba(222, 184, 135, 0.733);
@@ -234,13 +252,8 @@ body {
   }
   
   
-  .form-right, .form-left {
-    width: 48%; /* Ajuste conforme necessário */
-    border: 3px solid black; /* Adiciona uma borda cinza de 1px */
-    padding: 20px; /* Adiciona um preenchimento interno de 20px */
-    box-sizing: border-box; /* Garante que a largura da borda esteja incluída na largura total */
-  }
-  Com es
+ 
+ 
   /* Estilos adicionais conforme necessário */
   
   h2 {
@@ -310,71 +323,8 @@ body {
   
   
   
-  @media screen and (max-width: 768px) {
-    .page-title{
-      width: 100px;
-     font-size: 20px;
-     text-align: center;
-    }
-    .form-container {
-      flex-direction: column; /* Altera a direção do flex para coluna */
-    }
-  
-    .form-left,
-    .form-right {
-      width: 100%; /* Define a largura para 100% */
-      margin-bottom: 20px; /* Adiciona margem inferior para separar os formulários */
-    }
-    input[type="checkbox"] {
-      width: 40px;
-      height: 20px;
-      margin-right: 0px;
-    }
-  }
-  
-  @media screen and (max-width: 964px) {
-    .page-title{
-      width: 300px;
-      font-size: 20px;
-      text-align: center;
-     }
-    .form-container {
-      flex-direction: column; /* Altera a direção do flex para coluna */
-    }
-  
-    .form-left,
-    .form-right {
-      width: 100%; /* Define a largura para 100% */
-      margin-bottom: 20px; /* Adiciona margem inferior para separar os formulários */
-    }
-    input[type="checkbox"] {
-      width: 40px;
-      height: 20px;
-      margin-right: 0px;
-    }
-  }
-  @media screen and (max-width: 1200px) {
-    .page-title{
-      width: 300%;
-      font-size: 20px;
-      text-align: center;
-     }
-    .form-container {
-      flex-direction: column; /* Altera a direção do flex para coluna */
-    }
-  
-    .form-left,
-    .form-right {
-      width: 100%; /* Define a largura para 100% */
-      margin-bottom: 20px; /* Adiciona margem inferior para separar os formulários */
-    }
-    input[type="checkbox"] {
-      width: 40px;
-      height: 20px;
-      margin-right: 0px;
-    }
-  }
-  .action {
+
+.action {
     color: black;
     vertical-align: middle;
 
@@ -438,7 +388,7 @@ body {
 }
 
 .msg.success {
-  color: burlywood;
+  color: black;
   background-color: #D1E7DD;
   border-color: #BADBCC;
 }

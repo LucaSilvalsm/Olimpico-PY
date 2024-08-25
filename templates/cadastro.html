@@ -20,15 +20,7 @@
                     <h3 class="title-form">Criando Cadastro</h3>
                 </span>
 
-                {% if get_flashed_messages(with_categories=true) %}
-                    <div class="alert-messages">
-                        {% for category, message in get_flashed_messages(with_categories=true) %}
-                            <div class="alert alert-{{ category }}">
-                                {{ message }}
-                            </div>
-                        {% endfor %}
-                    </div>
-                {% endif %}
+               
 				
                 <div class="wrap-input100 validate-input">
                     <input class="input100" type="text" name="nome" required>

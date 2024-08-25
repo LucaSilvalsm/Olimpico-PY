@@ -3,6 +3,7 @@ from flask_login import login_user, current_user,logout_user
 from Model import db, Usuario
 from dao.UsuarioDAO import UsuarioDAO
 
+
 user_bp = Blueprint('user_bp', __name__)
 
 # Instância do DAO para manipulação de usuários

@@ -67,16 +67,11 @@ class PedidoDAO:
             db.session.rollback()
             raise e
     def atualizar_status_pedido(self, pedido_id, novo_status):
-        try:
-            pedido = Pedido.query.filter_by(id=pedido_id).first()
-            if pedido:
-                pedido.status = novo_status
-                db.session.commit()
-                return True
-            return False  # Retorna False se o pedido não existir
-        except Exception as e:
-            db.session.rollback()
-            raise e
+            # Conecte-se ao banco de dados e execute a query para atualizar o status do pedido
+            # Exemplo:
+            with self.conn.cursor() as cursor:
+                cursor.execute("UPDATE pedidos SET status = %s WHERE id = %s", (novo_status, pedido_id))
+            self.conn.commit()
     def calcular_valor_total_dos_pedidos(self):
         try:
             pedidos = Pedido.query.all()

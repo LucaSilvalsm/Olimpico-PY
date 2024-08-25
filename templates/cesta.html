@@ -20,12 +20,15 @@
                 </tr>
             </thead>
             <tbody>
+                
                 {% set valor_total = 0 %}
                 {% for carrinho in itens_carrinho %}
                 <tr>
                     <td style="vertical-align: middle;" scope="row">{{ carrinho.id }}</td>
                     <td>
-                        <div class="card-img-top-cesta" style="background-image: url('{{ url_for('static', filename='img/produtos/' + carrinho.imagem_produto) }}')"></div>
+                        <div class="card-img-top-cesta"
+                            style="background-image: url('{{ url_for('static', filename='img/produtos/' + carrinho.imagem_produto) }}')">
+                        </div>
                     </td>
                     <td style="vertical-align: middle;">{{ carrinho.nome_produto }}</td>
                     <td style="vertical-align: middle;">{{ carrinho.quantidade }}</td>
@@ -84,14 +87,16 @@
                             <!-- Campo para inserir o valor em dinheiro (oculto inicialmente) -->
                             <div id="campoDinheiro" class="col-md-12" style="display: none;">
                                 <label for="valorDinheiro">Valor em dinheiro:</label>
-                                <input type="number" id="valorDinheiro" name="valorDinheiro" class="form-control" step="0.01">
+                                <input type="number" id="valorDinheiro" name="valorDinheiro" class="form-control"
+                                    step="0.01">
                                 <h3 id="trocoMsg" class="card-btn">O troco será calculado automaticamente</h3>
                             </div>
 
                             <!-- Botão para criar o pedido -->
                             <div class="col-md-12">
                                 <button id="pedido-btn" type="submit" class="delete-btn card-btn">
-                                    <i class='bx bx-cart'></i> <span id="total_carrinho">Criar Pedido por R$ {{ total_carrinho }}</span>
+                                    <i class='bx bx-cart'></i> <span id="total_carrinho">Criar Pedido por R$ {{
+                                        total_carrinho }}</span>
                                 </button>
                             </div>
                         </form>

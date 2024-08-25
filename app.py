@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask,flash,redirect,url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_session import Session
@@ -52,6 +52,11 @@ app.register_blueprint(produto_bp, url_prefix='/produto', name='produto_bp')
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'user_bp.login'  # Aponte para a rota de login correta
+
+@login_manager.unauthorized_handler
+def unauthorized():
+    flash('Necessário estar logado para acessar esta página.','error')
+    return redirect(url_for('page_bp.login'))
 
 # Função para carregar o usuário pelo ID
 @login_manager.user_loader

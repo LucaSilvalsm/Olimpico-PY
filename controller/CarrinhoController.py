@@ -71,7 +71,7 @@ def delete():
         carrinho = carrinho_dao.obter(carrinho_id)
         if carrinho:
             carrinho_dao.delete(carrinho.id)
-            flash(f'Carrinho ID {carrinho_id} excluído com sucesso', 'success')
+            flash(f'Produto removido do carrinho com sucesso', 'success')
         else:
             flash(f'Carrinho ID {carrinho_id} não encontrado para excluir', 'error')
     except Exception as e:

@@ -1,8 +1,22 @@
 {% extends 'admin/base.html' %}
 
 {% block content %}
+  
     <div class="form-container">
-        <div class="form">
+        
+        
+        <div class="form">  
+            {% set messages = get_flashed_messages(with_categories=True) %}
+            {% if messages %}
+                <div class="msg-container">
+                    {% for category, message in messages %}
+                        <div class="msg {{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            
             <h2 class="page-title">Adicionando Hamburguer</h2>
             <form action="{{ url_for('produto_bp.register') }}" method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="type" value="criar">
@@ -45,35 +59,140 @@
                 </div>
     
                 <label>Ingredientes:</label>
-                <div class="ingrediente">
-                    <input type="checkbox" id="bacon" name="ingrediente[]" value="Bacon">
+                <div id="hamburguer-tradicional" class="ingrediente" style="display:none;">
+                   
+                    <input type="checkbox" id="bacon" name="ingrediente[]" value="Bacon" >
                     <label for="bacon">Bacon</label>
-                    <input type="checkbox" id="batata-frita" name="ingrediente[]" value="Batata frita">
-                    <label for="batata-frita">Batata Frita</label>
-                    <input type="checkbox" id="nuggest" name="ingrediente[]" value="Nuggets">
-                    <label for="nuggest">Nuggets </label>
+                    
                     <input type="checkbox" id="anel-cebola" name="ingrediente[]" value="Anel de cebola">
                     <label for="anel-cebola">Anel de Cebola</label>
+
                     <input type="checkbox" id="calabresa" name="ingrediente[]" value="Calabresa">
                     <label for="calabresa">Calabresa</label>
+
                     <input type="checkbox" id="salada" name="ingrediente[]" value="Salada">
                     <label for="salada">Salada</label>
+
                     <input type="checkbox" id="molho" name="ingrediente[]" value="Molho">
                     <label for="molho">Molho</label>
+
                     <input type="checkbox" id="queijo" name="ingrediente[]" value="Queijo">
                     <label for="queijo">Quejo</label>
+
                     <input type="checkbox" id="cebola" name="ingrediente[]" value="Cebola">
                     <label for="cebola">Cebola</label>
+
                     <input type="checkbox" id="duas_carnes" name="ingrediente[]" value="2 Carnes">
                     <label for="duas_carnes">2 Carnes</label>
+
                     <input type="checkbox" id="uma_carne" name="ingrediente[]" value="1 Carne">
                     <label for="uma_carne">1 Carne</label>
+                    
                     <input type="checkbox" id="ovo" name="ingrediente[]" value="Ovo">
                     <label for="ovo">Ovo</label>
+
                     <input type="checkbox" id="cheddar" name="ingrediente[]" value="Cheddar">
                     <label for="cheddar">Cheddar</label>
+
                     <input type="checkbox" id="barbecue" name="ingrediente[]" value="Barbecue">
                     <label for="barbecue">Barbecue</label>
+                </div>
+
+                <div id="hamburguer-artesanal" class="ingrediente" style="display:none;">
+                    
+                    <input type="checkbox" id="bacon" name="ingrediente[]" value="Bacon" >
+                    <label for="bacon">Bacon</label>
+                    
+                    <input type="checkbox" id="anel-cebola" name="ingrediente[]" value="Anel de cebola">
+                    <label for="anel-cebola">Anel de Cebola</label>
+
+                    <input type="checkbox" id="calabresa" name="ingrediente[]" value="Calabresa">
+                    <label for="calabresa">Calabresa</label>
+
+                    <input type="checkbox" id="salada" name="ingrediente[]" value="Salada">
+                    <label for="salada">Salada</label>
+
+                    <input type="checkbox" id="molho" name="ingrediente[]" value="Molho">
+                    <label for="molho">Molho</label>
+
+                    <input type="checkbox" id="queijo" name="ingrediente[]" value="Queijo">
+                    <label for="queijo">Quejo</label>
+
+                    <input type="checkbox" id="cebola" name="ingrediente[]" value="Cebola">
+                    <label for="cebola">Cebola</label>
+
+                    <input type="checkbox" id="duas_carnes" name="ingrediente[]" value="2 Carnes">
+                    <label for="duas_carnes">2 blend</label>
+
+                    <input type="checkbox" id="uma_carne" name="ingrediente[]" value="1 Carne">
+                    <label for="uma_carne">1 blend</label>
+                    
+                    <input type="checkbox" id="ovo" name="ingrediente[]" value="Ovo">
+                    <label for="ovo">Ovo</label>
+
+                    <input type="checkbox" id="cheddar" name="ingrediente[]" value="Cheddar">
+                    <label for="cheddar">Cheddar</label>
+
+                    <input type="checkbox" id="barbecue" name="ingrediente[]" value="Barbecue">
+                    <label for="barbecue">Barbecue</label>
+                </div>
+
+                
+                <div id="porcao" class="ingrediente" style="display:none;">
+                    
+                    <input type="checkbox" id="bacon" name="ingrediente[]" value="Bacon" >
+                    <label for="bacon">Bacon</label>
+                    
+                    <input type="checkbox" id="batata frita" name="ingrediente[]" value="batata frita">
+                    <label for="batata frita">Batata Frita</label>
+
+                    <input type="checkbox" id="batata chipps" name="ingrediente[]" value="batata chipps">
+                    <label for="batata chipps">Batata Chipps</label>
+
+                    <input type="checkbox" id="anel-cebola" name="ingrediente[]" value="Anel de cebola">
+                    <label for="anel-cebola">Anel de Cebola</label>
+
+                    <input type="checkbox" id="Nuggets" name="ingrediente[]" value="Nuggets">
+                    <label for="Nuggets">Nuggets</label>   
+                   
+                    
+                    <input type="checkbox" id="calabresa" name="ingrediente[]" value="Calabresa">
+                    <label for="calabresa">Calabresa</label>   
+
+                    <input type="checkbox" id="molho" name="ingrediente[]" value="Molho">
+                    <label for="molho">Molho</label>          
+
+                </div>
+
+                <div id="sobremesa" class="ingrediente" style="display:none;">
+                    
+                    <input type="checkbox" id="Granulado" name="ingrediente[]" value="Granulado">
+                    <label for="Granulado">Granulado</label>
+
+                    <input type="checkbox" id="Leite de Ninho" name="ingrediente[]" value="Leite de Ninho">
+                    <label for="Leite de Ninho">Leite de Ninho</label>
+
+                    <input type="checkbox" id="Chocolate" name="ingrediente[]" value="Chocolate">
+                    <label for="Chocolate">Chocolate</label>
+
+                    <input type="checkbox" id="Kit-Kat" name="ingrediente[]" value="Kit-Kat">
+                    <label for="Kit-Kat">Kit-Kat</label>
+
+                    <input type="checkbox" id="Confete" name="ingrediente[]" value="Confete">
+                    <label for="Confete">Confete</label>
+
+                    <input type="checkbox" id="Nutella" name="ingrediente[]" value="Nutella">
+                    <label for="Nutella">Nutella</label>
+
+                    <input type="checkbox" id="Batido com Banana" name="ingrediente[]" value="Batido com Banana">
+                    <label for="Batido com Banana">Batido com Banana</label>
+
+                    <input type="checkbox" id="Batido de Morango" name="ingrediente[]" value="Batido de Morango">
+                    <label for="Batido de Morango">Batido de Morango</label>
+
+                    <input type="checkbox" id="Morango" name="ingrediente[]" value="Morango">
+                    <label for="Morango">Morango</label>
+
                 </div>
     
                 <label for="preco">Preço:</label>
@@ -88,6 +207,6 @@
                 <button class="btn align-self-center card-btn" type="submit">Adicionar Hamburguer</button>
             </form>
         </div>
-        <script src="/static/JS/limite.js"></script>
+        <script src="{{ url_for('static', filename='JS/limite.js') }}"></script>
     </div>
 {% endblock %}

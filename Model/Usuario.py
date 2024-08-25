@@ -63,6 +63,15 @@ class UsuarioAdmin(db.Model):
         self.senha = senha
     def get_id(self):
         return str(self.id)
+    def serialize(self):
+        return {
+            "ID": self.id,
+            "Nome": self.nome,
+            "Sobrenome": self.sobrenome,
+            "Email": self.email,
+            "Tipo de Cliente": self.tipo_cliente
+            # Adicione mais campos conforme necessário
+        }
 
     @property
     def is_active(self):

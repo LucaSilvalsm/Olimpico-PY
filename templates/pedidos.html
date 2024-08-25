@@ -7,10 +7,10 @@
     <h2 class="page-title">Pedidos</h2>
     <p class="section-description">Confira aqui seus pedidos</p>
     <div class="col-md-12" id="carrinho-dashboard">
-        <table class="table">
+        <table id="pedidos-table" class="table">
             <thead>
                 <tr>
-                    <th  style="center" scope="col">Pedido</th>
+                    <th style="center" scope="col">Pedido</th>
                     <th scope="col">Nome</th>                    
                     <th scope="col">Observação</th>
                     <th scope="col">Status</th>
@@ -20,17 +20,67 @@
             </thead>
             <tbody>
                 {% for pedido in pedidos %}
-                <tr>
-                    <td style="vertical-align: middle;"  nowrap scope="row">{{ pedido.id }}</td>
-                        <td style="vertical-align: middle;">{{ pedido.itens_comprados }}</td>
-                        <td style="vertical-align: middle;">{{ pedido.observacao }}</td>
-                        <td style="vertical-align: middle;" nowrap>{{ pedido.status }}</td>
-                        <td style="vertical-align: middle;" nowrap>R$ {{ pedido.valor_total }}</td>
-                        <td style="vertical-align: middle;" class="actions-column"> {{ pedido.forma_pagamento }}  </td>
-                    </tr>
+                <tr class="pedido-row">
+                    <td style="vertical-align: middle;" nowrap scope="row">{{ pedido.id }}</td>
+                    <td style="vertical-align: middle;">{{ pedido.itens_comprados }}</td>
+                    <td style="vertical-align: middle;">{{ pedido.observacao }}</td>
+                    <td style="vertical-align: middle;" nowrap>{{ pedido.status }}</td>
+                    <td style="vertical-align: middle;" nowrap>R$ {{ pedido.valor_total }}</td>
+                    <td style="vertical-align: middle;" class="actions-column"> {{ pedido.forma_pagamento }}  </td>
+                </tr>
                 {% endfor %}
             </tbody>
         </table>
+        <!-- Controles de Paginação -->
+        <nav>
+            <ul id="pagination-controls" class="pagination">
+                <!-- Paginação será inserida aqui pelo JavaScript -->
+            </ul>
+        </nav>
     </div>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const perPage = 9; // Máximo de número por página
+        const rows = document.querySelectorAll('#pedidos-table .pedido-row');
+        const totalRows = rows.length;
+        const totalPages = Math.ceil(totalRows / perPage);
+        const paginationControls = document.getElementById('pagination-controls');
+
+        function showPage(page) {
+            rows.forEach((row, index) => {
+                row.style.display = (index >= (page - 1) * perPage && index < page * perPage) ? '' : 'none';
+            });
+        }
+
+        function createPaginationControls() {
+            for (let i = 1; i <= totalPages; i++) {
+                const li = document.createElement('li');
+                li.className = 'page-item';
+                if (i === 1) li.classList.add('active'); // Marcar a primeira página como ativa
+                const a = document.createElement('a');
+                a.className = 'page-link';
+                a.href = '#';
+                a.textContent = i;
+                a.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    showPage(i);
+                    updateActivePage(i);
+                });
+                li.appendChild(a);
+                paginationControls.appendChild(li);
+            }
+        }
+
+        function updateActivePage(page) {
+            document.querySelectorAll('#pagination-controls .page-item').forEach((item, index) => {
+                item.classList.toggle('active', index === (page - 1));
+            });
+        }
+
+        // Inicializar a página
+        showPage(1);
+        createPaginationControls();
+    });
+</script>
 {% endblock %}

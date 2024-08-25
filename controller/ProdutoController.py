@@ -90,11 +90,11 @@ def delete():
         if produto:
             try:
                 produtoDao.excluir(produto_id)
-                flash(f'Produto ID {produto_id} excluído com sucesso!', 'success')
+                flash(f'Produto ID  excluído com sucesso!', 'success')
             except Exception as e:
                 flash(f'Erro ao excluir produto: {str(e)}', 'error')
         else:
-            flash(f'Produto ID {produto_id} não encontrado para exclusão', 'error')
+            flash(f'Produto não encontrado para exclusão', 'error')
 
         return redirect(url_for('page_bp.all_produtos'))
 

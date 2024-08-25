@@ -2,6 +2,7 @@
 
 </head>
 <body>
+    
     <header>
         <div style="align-items: center;" class="info-header">
             <div class="logo">
@@ -17,7 +18,9 @@
             </a> <img src="/static/img/logo.png" alt="logo" id="logo">
         </div>
     </header> <!-- Fim do header -->
+    
     <section class="main">
+        
         <div class="sidebar">
             <h3> HOME</h3>
             <a class="sidebar-active" href="/painel" > <i class='bx bxs-report'></i> Relatorio de Venda</a>
@@ -30,7 +33,7 @@
             <hr>
 
             <h3> PRODUTOS</h3>
-            <a href="/produto"><i class='bx bxs-report'></i> Adicionar Produto</a>
+            <a href="/admin/newproduto"><i class='bx bxs-report'></i> Adicionar Produto</a>
             <a href="#"><i class='bx bxs-report'></i> Atualizar Produto</a>
             <a href="/all_produtos"><i class='bx bxs-report'></i> Remover Produto</a>
             <a href="#"><i class='bx bxs-badge-dollar'></i> Adicionar Promoção</a>           
@@ -54,4 +57,6 @@
             <a href="{{ url_for('admin_bp.login') }}"><i class='bx bxs-report'></i> Sair</a>
             <br/>
             <hr>
+            
         </div> <!--FIM Sidebar-->
+        

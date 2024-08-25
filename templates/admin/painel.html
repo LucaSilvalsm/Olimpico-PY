@@ -3,13 +3,22 @@
 {% block content %}
 <link rel="stylesheet" href="/static/css/dashboard.css">
 
-
 <div class="content">
     <div class="titulo-secao">
         <h2>Dashboard</h2>
         <br />
         <hr>
         <p><i class="fa-solid fa-house"></i> / Dashboard do Projeto </p>
+        {% set messages = get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+            <div class="msg-container">
+                {% for category, message in messages %}
+                    <div class="msg {{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
     </div>
 
     <div class="box-info">
@@ -72,7 +81,6 @@
                                     <option value="Saiu para entrega" {% if pedido.status == 'Saiu para entrega' %} selected {% endif %}>Saiu para Entrega</option>
                                     <option value="Entregue" {% if pedido.status == 'Entregue' %} selected {% endif %}>Entregue</option>
                                     <option value="Cancelado" {% if pedido.status == 'Cancelado' %} selected {% endif %}>Cancelado</option>
-
                                 </select>
                             </td>
                             <td style="vertical-align: middle;" nowrap>R$ {{ pedido.valor_total }}</td>
@@ -81,7 +89,7 @@
                                 <!--Editar-->
                                 <a href="#" class="edit-link" data-pedido-id="{{ pedido.id }}"><i class="fas fa-edit edit-icon"></i></a>
                                 <input type="hidden" name="id" value="{{ pedido.id }}">
-                                <form class="delete-form" action="{{ url_for('produto_bp.delete') }}" method="POST">
+                                <form class="delete-form" action="{{ url_for('pedido_bp.atualizar') }}" method="POST">
                                     <input type="hidden" name="type" value="delete">
                                     <input type="hidden" name="id" value="{{ pedido.id }}">
                                     <button type="submit" class="delete-btn"><i class="fas fa-times delete-icon"></i></button>
@@ -105,23 +113,20 @@
             const pedidoId = this.getAttribute('data-pedido-id');
             const novoStatus = this.value;
 
-            fetch("dashboard.php", {
+            fetch("{{ url_for('pedido_bp.atualizar') }}", {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded'
                     },
-                    body: `id=${pedidoId}&status_pedido=${novoStatus}`
+                    body: `id=${pedidoId}&status=${novoStatus}`
                 })
                 .then(response => {
                     if (response.ok) {
-                        return response.json();
+                        // Recarrega a página após a atualização do status do pedido
+                        location.reload();
                     } else {
                         throw new Error('Falha ao atualizar o status do pedido.');
                     }
-                })
-                .then(data => {
-                    // Recarrega a página após a atualização do status do pedido
-                    location.reload();
                 })
                 .catch(error => {
                     console.error(error.message);
