@@ -83,6 +83,7 @@
                                     <option value="Cancelado" {% if pedido.status == 'Cancelado' %} selected {% endif %}>Cancelado</option>
                                 </select>
                             </td>
+                            
                             <td style="vertical-align: middle;" nowrap>R$ {{ pedido.valor_total }}</td>
                             <td style="vertical-align: middle;">{{ pedido.forma_pagamento }}</td>
                             <td style="vertical-align: middle;" class="action">
@@ -106,33 +107,42 @@
 </div> <!--FIM Content-->
 
 </section> <!--MAIN-->
-
 <script>
-    document.querySelectorAll('.status-select').forEach(select => {
-        select.addEventListener('change', function(event) {
-            const pedidoId = this.getAttribute('data-pedido-id');
-            const novoStatus = this.value;
+    document.addEventListener('DOMContentLoaded', function() {
+        // Selecionar todos os selects de status
+        const statusSelects = document.querySelectorAll('.status-select');
 
-            fetch("{{ url_for('pedido_bp.atualizar') }}", {
+        statusSelects.forEach(select => {
+            select.addEventListener('change', function() {
+                const pedidoId = this.getAttribute('data-pedido-id');
+                const novoStatus = this.value;
+
+                // Enviar a requisição AJAX
+                fetch('/atualizar', {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token() }}'  // Se você estiver usando CSRF
                     },
-                    body: `id=${pedidoId}&status=${novoStatus}`
+                    body: JSON.stringify({
+                        id: pedidoId,
+                        status: novoStatus
+                    })
                 })
-                .then(response => {
-                    if (response.ok) {
-                        // Recarrega a página após a atualização do status do pedido
-                        location.reload();
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        
                     } else {
-                        throw new Error('Falha ao atualizar o status do pedido.');
+                        alert('Erro ao atualizar status: ' + data.message);
                     }
                 })
-                .catch(error => {
-                    console.error(error.message);
-                });
+                .catch(error => console.error('Erro:', error));
+            });
         });
     });
 </script>
+
+
 
 {% endblock %}

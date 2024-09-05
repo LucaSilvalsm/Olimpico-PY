@@ -487,7 +487,17 @@ tbody tr:nth-child(even) {
 footer {
   margin-top: 20px; /* Defina a margem superior desejada para o footer */
 }
-
+#campoPix{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  
+}
+#campoPix #pix-qr-code{
+  background-color: #842029;
+  width: 300px;
+}
 /* Footer  Acaba aqui */
 
 

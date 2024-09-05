@@ -19,6 +19,7 @@
             
             <h2 class="page-title">Adicionando Hamburguer</h2>
             <form action="{{ url_for('produto_bp.register') }}" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                 <input type="hidden" name="type" value="criar">
                 
                 <label for="nome">Nome do Hamburguer:</label>

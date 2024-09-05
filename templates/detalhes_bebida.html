@@ -23,6 +23,7 @@
       <p class="card-text">Preço R$ {{ produto.preco }}</p>
       <!-- Adicionando o formulário para adicionar ao carrinho -->
       <form class="addToCartForm" action="{{ url_for('carrinho_bp.criando') }}" method="POST" id="carrinhoForm">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
         <input type="hidden" name="produto_id" value="{{ produto.id }}">
         <input type="hidden" name="quantidade" id="quantity_hidden" value="0">
         <input type="hidden" name="totalPrice" id="totalPrice_hidden" value="0">

@@ -13,6 +13,7 @@
     <div class="container-login100">
         <div class="wrap-login100">
             <form method="POST" action="{{ url_for('user_bp.login') }}" method="POST" class="login100-form validate-form">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                 <input type="hidden" name="type" value="login">
 
                 <span class="login100-form-title p-b-43">

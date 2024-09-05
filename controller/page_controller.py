@@ -10,6 +10,11 @@ from Model.Usuario import Usuario
 from flask_login import current_user,login_required
 from Model.Pedido import Pedido
 from dao.PedidoDAO import PedidoDAO
+from flask import jsonify, request
+from pixqrcodegen import Payload
+import os
+import traceback
+import logging
 
 
 page_bp = Blueprint('page_bp', __name__)
@@ -31,7 +36,7 @@ def index():
     porcao = produto_dao.tipo_produto("Porcao")
     sobremesa = produto_dao.tipo_produto("Sobremesa")
     print("Acessando a rota /")
-    print(artesanais)  # Apenas para debug, para verificar se os produtos foram obtidos corretamente
+    
     return render_template("index.html", artesanais=artesanais,tradicionais=tradicionais,bebidas=bebidas, porcao=porcao,sobremesa=sobremesa)
 
 
@@ -41,6 +46,7 @@ def login():
 
     # Se o método HTTP for GET, renderize o formulário de login
     return render_template('login.html')
+
 @page_bp.route("/admin_login")
 def admin_login():
     print("Acessando a rota /admin_login")
@@ -72,6 +78,7 @@ def pedidos():
 @login_required
 
 def cesta():
+    
     if current_user.is_authenticated:
         usuario_id = current_user.id  # Obtém o ID do usuário autenticado
         usuario_dao = UsuarioDAO()
@@ -97,6 +104,35 @@ def cesta():
     flash('Faça o Login para Continuar', 'warning')
     return redirect(url_for('user_bp.login'))
     
+@page_bp.route('/gerar_pix_qr', methods=['POST'])
+@login_required
+def gerar_pix_qr():
+    try:
+        forma_pagamento = request.form['formaPagamento']
+        if forma_pagamento == 'PIX':
+            valor_total = request.form['valorTotal']  # Valor total do carrinho
+            
+            # Dados do usuário e outros detalhes necessários
+            nome = 'Lucas Moreira'
+            chavepix = 'd0cea1c5-4f6c-49a2-bd87-99906d8b52f1'  # Substitua com a chave PIX real do recebedor
+            cidade = 'Duque de Caxias'
+            txtId = 'OlimpicoBurguer'
+            diretorio = 'static/'
+
+            # Cria uma instância da classe Payload
+            payload = Payload(nome, chavepix, valor_total, cidade, txtId, diretorio)
+            payload.gerarPayload()
+            
+            # Definindo o caminho do QR Code gerado
+            qr_code_path = os.path.join(diretorio, 'pixqrcodegen.png')
+            return jsonify({'qr_code_path': qr_code_path})
+        
+        return redirect(url_for('page_bp.cesta'))
+    except Exception as e:
+        logging.error(f'Erro ao gerar QR Code PIX: {str(e)}')
+        
+        return redirect(url_for('page_bp.index'))  
+
 @page_bp.route("/cadastro_admin")
 def cadastro_admin():
     print("Acessando a rota /cadastro_admin")

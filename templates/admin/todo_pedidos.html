@@ -51,6 +51,7 @@
                                 <a href="#" class="edit-link" data-pedido-id="{{ pedido.id }}"><i class="fas fa-edit edit-icon"></i></a>
                                 <input type="hidden" name="id" value="{{ pedido.id }}">
                                 <form class="delete-form" action="" method="POST">
+                                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                                     <input type="hidden" name="type" value="delete">
                                     <input type="hidden" name="id" value="{{ pedido.id }}">
                                     <button type="submit" class="delete-btn"><i class="fas fa-times delete-icon"></i></button>

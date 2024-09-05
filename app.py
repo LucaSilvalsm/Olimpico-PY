@@ -2,6 +2,7 @@ from flask import Flask,flash,redirect,url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_session import Session
+from flask_wtf.csrf import CSRFProtect
 import secrets
 import os
 
@@ -35,7 +36,7 @@ app.config['UPLOAD_FOLDER'] = os.path.join('static', 'img', 'produtos')
 # Configuração da sessão (exemplo usando filesystem)
 app.config['SESSION_TYPE'] = 'filesystem'
 Session(app)
-
+csrf = CSRFProtect(app)
 # Inicialização do SQLAlchemy
 db.init_app(app)
 
@@ -61,8 +62,7 @@ def unauthorized():
 # Função para carregar o usuário pelo ID
 @login_manager.user_loader
 def load_user(user_id):
-    return Usuario.query.get(user_id)
-
+    return db.session.get(Usuario, user_id)
 if __name__ == '__main__':
     # Criação das tabelas no banco de dados
     with app.app_context():

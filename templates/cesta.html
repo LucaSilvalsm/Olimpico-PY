@@ -20,7 +20,6 @@
                 </tr>
             </thead>
             <tbody>
-                
                 {% set valor_total = 0 %}
                 {% for carrinho in itens_carrinho %}
                 <tr>
@@ -36,6 +35,7 @@
                     <td style="vertical-align: middle;">R$ {{ carrinho.preco_total }}</td>
                     <td style="vertical-align: middle;" class="actions-column">
                         <form class="delete-form" action="{{ url_for('cesta_bp.delete') }}" method="POST">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                             <input type="hidden" name="type" value="deleteProduto">
                             <input type="hidden" name="id" value="{{ carrinho.id }}">
                             <button type="submit" class="delete-btn"><i class="fas fa-times delete-icon"></i></button>
@@ -67,48 +67,92 @@
                 <!-- Nova linha para o botão "Criar Pedido" -->
                 <tr>
                     <td colspan="7">
-                        <form id="form-criar-pedido" action="{{ url_for('pedido_bp.criar_pedido') }}" method="POST">
-                            <input type="hidden" name="type" value="criarPedido">
+                    <form id="form-criar-pedido" action="{{ url_for('pedido_bp.criar_pedido') }}" method="POST">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <input type="hidden" name="type" value="criarPedido">
 
-                            <!-- Label "Forma de Pagamento" com pequeno espaço à esquerda -->
-                            <div class="col-md-3">
-                                <label for="formaPagamento" class="form-label">Forma de Pagamento:</label>
-                            </div>
+                        <!-- Forma de pagamento -->
+                        <div class="col-md-3">
+                            <label for="formaPagamento" class="form-label">Forma de Pagamento:</label>
+                        </div>
 
-                            <!-- Menu suspenso (select) ocupando a mesma largura -->
-                            <div class="col-md-12">
-                                <select id="formaPagamento" name="formaPagamento" class="form-select">
-                                    <option value="CARTAO">Cartão</option>
-                                    <option value="PIX">PIX</option>
-                                    <option value="DINHEIRO">Dinheiro</option>
-                                </select>
-                            </div>
+                        
 
-                            <!-- Campo para inserir o valor em dinheiro (oculto inicialmente) -->
-                            <div id="campoDinheiro" class="col-md-12" style="display: none;">
-                                <label for="valorDinheiro">Valor em dinheiro:</label>
-                                <input type="number" id="valorDinheiro" name="valorDinheiro" class="form-control"
-                                    step="0.01">
-                                <h3 id="trocoMsg" class="card-btn">O troco será calculado automaticamente</h3>
-                            </div>
 
-                            <!-- Botão para criar o pedido -->
-                            <div class="col-md-12">
-                                <button id="pedido-btn" type="submit" class="delete-btn card-btn">
-                                    <i class='bx bx-cart'></i> <span id="total_carrinho">Criar Pedido por R$ {{
-                                        total_carrinho }}</span>
-                                </button>
-                            </div>
-                        </form>
-                    </td>
-                </tr>
-            </tbody>
+                        <div class="col-md-12">
+                            <select id="formaPagamento" name="formaPagamento" class="form-select">
+                                <option value="CARTAO">Cartão</option>
+                                <option value="PIX">PIX</option>
+                                <option value="DINHEIRO">Dinheiro</option>
+                            </select>
+                        </div>
+
+                        <div id="campoDinheiro" class="col-md-12" style="display: none;">
+                            <label for="valorDinheiro">Valor em dinheiro:</label>
+                            <input type="number" id="valorDinheiro" name="valorDinheiro" class="form-control" step="0.01">
+                            <h3 id="trocoMsg" class="card-btn">O troco será calculado automaticamente</h3>
+                        </div>
+
+                        <div id="campoPix" class="col-md-12" style="display: none;">
+                            <h3>Escaneie o QR Code abaixo para pagar com PIX:</h3>
+                            <img id="pix-qr-code" src="" alt="QR Code PIX" >
+                        </div>
+
+                        <div class="col-md-12">
+                            <button id="pedido-btn" type="submit" class="delete-btn card-btn">
+                                <i class='bx bx-cart'></i> <span id="total_carrinho">Criar Pedido por R$ {{ total_carrinho }}</span>
+                            </button>
+                        </div>
+                    </form>
+                </td>
+            </tr>
         </table>
     </div>
 </div>
-
 <script>
-    // Aqui você pode adicionar scripts JavaScript adicionais, se necessário.
-</script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var formaPagamentoSelect = document.getElementById('formaPagamento');
+        var campoPix = document.getElementById('campoPix');
+        var campoDinheiro = document.getElementById('campoDinheiro');
+        var pixQrCodeImg = document.getElementById('pix-qr-code');
+        
+        formaPagamentoSelect.addEventListener('change', function() {
+            if (this.value === 'PIX') {
+                campoPix.style.display = 'block';
+                campoDinheiro.style.display = 'none';
+    
+                // Obtendo o valor total do carrinho
+                var valorTotal = '{{ total_carrinho }}';
+    
+                // Enviar uma solicitação para gerar o QR Code
+                fetch('/gerar_pix_qr', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'X-CSRFToken': '{{ csrf_token() }}'
+                    },
+                    body: new URLSearchParams({
+                        'formaPagamento': 'PIX',
+                        'valorTotal': valorTotal
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.qr_code_path) {
+                        pixQrCodeImg.src = '/' + data.qr_code_path;
+                    } else if (data.error) {
+                        console.error('Erro ao gerar QR Code:', data.error);
+                    }
+                })
+                .catch(error => console.error('Erro:', error));
+            } else {
+                campoPix.style.display = 'none';
+                campoDinheiro.style.display = 'none';
+            }
+        });
+    });
+    </script>
+    
 
 {% endblock %}
+

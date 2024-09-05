@@ -13,6 +13,7 @@
     <div class="container-login100">
         <div class="wrap-login100">
             <form method="POST" action="{{ url_for('user_bp.register') }}" class="login100-form validate-form" onsubmit="return validateForm()">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
                 <input type="hidden" name="type" value="registrar">
                 
