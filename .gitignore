@@ -15,8 +15,7 @@ pixqrcodegen.png
 
 __pypackages__/
 
-controller/
-dao/
+
 Procfile
 
 
