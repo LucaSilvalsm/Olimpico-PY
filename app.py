@@ -72,3 +72,5 @@ if __name__ == '__main__':
     
     # Execução do aplicativo Flask
     app.run(debug=True)
+    
+
