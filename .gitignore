@@ -2,7 +2,8 @@
 __pycache__/
 
 dao/__pycache__
-
+controllers/__pycache__
+Model/__pycache__
 
 
 *.pyc
