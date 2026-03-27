@@ -140,6 +140,7 @@ def cadastro_admin():
 
 @page_bp.route("/painel")
 def painel():
+    current_route = 'painel'
     pedido_dao = PedidoDAO()
     pedidos = pedido_dao.obter_ultimos_10_pedidos()
     
@@ -150,17 +151,18 @@ def painel():
     quantidade_pedido = pedido_dao.contar_quantidade_de_pedidos()
     
     print("Acessando a rota /painel")
-    return render_template('./admin/painel.html', pedidos=pedidos, valor_total=valor_total, quantidade_pedido=quantidade_pedido, media_valor=media_valor)
+    return render_template('./admin/painel.html', pedidos=pedidos, valor_total=valor_total, quantidade_pedido=quantidade_pedido, media_valor=media_valor, current_route=current_route   )
 
 @page_bp.route('/todo_pedidos')
 
 
 def todos_pedidos():
+    current_route = 'todo_pedidos'
     pedido_dao = PedidoDAO()
     
     pedidos = pedido_dao.obter_todos_os_pedidos()
     
-    return render_template ('./admin/todo_pedidos.html',pedidos=pedidos)
+    return render_template ('./admin/todo_pedidos.html',pedidos=pedidos, current_route=current_route)
     
     
     
@@ -171,20 +173,23 @@ def todos_pedidos():
 
 
 def dashboard():
-    return render_template('/admin/painel.html')
+    current_route = 'dashboard'
+    return render_template('/admin/painel.html', current_route=current_route)
 
 @page_bp.route("/admin/newproduto")
 def produto():
+    current_route = 'newproduto'
     print("Acessando a rota /produto")
-    return render_template('./admin/newproduto.html')
+    return render_template('./admin/newproduto.html', current_route=current_route)
 
 @page_bp.route("/all_produtos")
 def all_produtos():
+    current_route = 'all_produtos'
     try:
         produto_dao = ProdutoDAO()  # Instanciação correta do ProdutoDAO
         produtos = produto_dao.todas_categorias()
         print("Acessando a rota /all_produtos")
-        return render_template('./admin/all_produtos.html', produtos=produtos)
+        return render_template('./admin/all_produtos.html', produtos=produtos,current_route=current_route)
     except Exception as e:
         flash(f'Erro ao carregar produtos: {str(e)}', 'error')
         return redirect(url_for('page_bp.index'))

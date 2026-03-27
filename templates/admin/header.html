@@ -23,7 +23,7 @@
         
         <div class="sidebar">
             <h3> HOME</h3>
-            <a class="sidebar-active" href="/painel" > <i class='bx bxs-report'></i> Relatorio de Venda</a>
+            <a class="{{ 'sidebar-active' if current_route == 'painel' else '' }}" href="/painel"> <i class='bx bxs-report'></i> Relatorio de Venda</a>
             <a href="#"><i class='bx bxs-report'></i> Relatorio de Pedidos</a>
             <a href="#"><i class='bx bxs-report'></i> Relatorio de Veda</a>
             <a href="#"><i class='bx bxs-report'></i> Relatorio </a>
@@ -33,17 +33,17 @@
             <hr>
 
             <h3> PRODUTOS</h3>
-            <a href="/admin/newproduto"><i class='bx bxs-report'></i> Adicionar Produto</a>
+            <a class="{{ 'sidebar-active' if current_route == 'newproduto' else '' }}" href="/admin/newproduto"><i class='bx bxs-report'></i> Adicionar Produto</a>
             <a href="#"><i class='bx bxs-report'></i> Atualizar Produto</a>
-            <a href="/all_produtos"><i class='bx bxs-report'></i> Remover Produto</a>
+            <a class="{{ 'sidebar-active' if current_route == 'all_produtos' else '' }}" href="/all_produtos"><i class='bx bxs-report'></i> Remover Produto</a>
             <a href="#"><i class='bx bxs-badge-dollar'></i> Adicionar Promoção</a>           
             <br/>
             <hr>
 
             <h3> Pedidos</h3>
-            <a href="/todo_pedidos"><i class='bx bxs-report'></i> Acompanhar Pedidos</a>
-            <a href="/todo_pedidos"><i class='bx bxs-report'></i> Atualizar os Pedidos</a>
-            <a href="/todo_pedidos"><i class='bx bxs-report'></i> Ver todos os Pedidos</a>
+            <a class="{{ 'sidebar-active' if current_route == 'todo_pedidos' else '' }}" href="/todo_pedidos"><i class='bx bxs-report'></i> Acompanhar Pedidos</a>
+            <a  class="{{ 'sidebar-active' if current_route == 'todo_pedidos' else '' }}" href="/todo_pedidos"><i class='bx bxs-report'></i> Atualizar os Pedidos</a>
+            <a class="{{ 'sidebar-active' if current_route == 'todo_pedidos' else '' }}" href="/todo_pedidos"><i class='bx bxs-report'></i> Ver todos os Pedidos</a>
                  
             <br/>
             <hr>
