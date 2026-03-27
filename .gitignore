@@ -1,9 +1,15 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
 
+
+
+
+*.pyc
+.env
+venv/
+.venv/
 flask_session/
-
-
+Model/config.py
 
 
 teste
