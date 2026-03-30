@@ -769,9 +769,28 @@ footer {
     padding: 8px 12px;
   }
   .card.movie-card .card-btn {
-  font-size: 9px;    /* era 11px */
+  font-size: 8px;    /* era 11px */
   padding: 2px 4px;  /* era 3px 6px */
-}
+  }
+  
+  /* Textos menores no mobile */
+  .card.movie-card .card-title {
+    font-size: 23px;
+    margin-bottom: 4px;
+    text-align: left;
+  }
+
+  .card.movie-card .card-text {
+    font-size: 20px;
+    margin-bottom: 10px;
+    /* Trunca textos longos */
+    white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    
+
+
 }
 
 
