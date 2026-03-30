@@ -5,7 +5,7 @@ dao/__pycache__
 controllers/__pycache__
 Model/__pycache__
 
-templates/admin
+templates/admin/
 *.pyc
 .env
 venv/
