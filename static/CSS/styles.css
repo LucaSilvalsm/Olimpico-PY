@@ -741,3 +741,135 @@ footer {
     transform: none;
   }
 }
+
+/* ===== 480px - CELULARES PEQUENOS ===== */
+
+/* --- NAVBAR --- */
+@media (max-width: 480px) {
+  #logo {
+    width: 45px;
+  }
+
+  #hamburgueria-title {
+    font-size: 14px;
+    bottom: 14px;
+    left: 50px;
+  }
+
+  .navbar-toggler {
+    padding: 3px 7px;
+  }
+
+  .navbar-toggler .fa-bars {
+    font-size: 18px;
+  }
+
+  .navbar-nav .nav-item .nav-link {
+    font-size: 14px;
+    padding: 8px 12px;
+  }
+}
+
+
+/* --- FOOTER --- */
+@media (max-width: 480px) {
+  .rodape-div {
+    padding: 20px 10px 15px;
+  }
+
+  .rodape-div-1,
+  .rodape-div-2,
+  .rodape-div-3,
+  .rodape-div-4 {
+    padding: 10px 0;
+  }
+
+  .title-footer {
+    font-size: 16px;
+  }
+
+  .elementoFooter {
+    font-size: 14px;
+  }
+
+  .elementoFooter p {
+    font-size: 13px;
+    margin-top: 3px;
+  }
+
+  .contact-text {
+    font-size: 12px;
+  }
+
+  .rodape-direitos {
+    font-size: 11px;
+    padding: 8px;
+  }
+}
+
+
+/* --- CARDS HAMBURGUER --- */
+@media (max-width: 480px) {
+  .movies-container {
+    grid-gap: 8px;
+    padding: 0 8px;
+  }
+
+  .card.movie-card {
+    height: 170px;
+  }
+
+  .card.movie-card .card-img-top {
+    width: 160px;
+    min-width: 160px;
+    height: 170px;
+  }
+
+  .card.movie-card .card-title {
+    font-size: 15px;
+  }
+
+  .card.movie-card .card-text {
+    font-size: 12px;
+    margin-bottom: 4px;
+  }
+
+  .card.movie-card .card-btn {
+    font-size: 11px;
+    padding: 3px 6px;
+  }
+
+  /* page-title também fica largo demais em 480px */
+  .page-title {
+    width: 90%;
+    font-size: 18px;
+  }
+}
+
+
+/* --- CARDS BEBIDAS --- */
+@media (max-width: 480px) {
+  .card.movie-card:has(.card-img-top-bebida) {
+    height: 170px;
+  }
+
+  .card.movie-card .card-img-top-bebida {
+    width: 160px;
+    min-width: 160px;
+    height: 170px;
+  }
+
+  .card.movie-card:has(.card-img-top-bebida) .card-title {
+    font-size: 15px;
+  }
+
+  .card.movie-card:has(.card-img-top-bebida) .card-text {
+    font-size: 12px;
+    margin-bottom: 4px;
+  }
+
+  .card.movie-card:has(.card-img-top-bebida) .card-btn {
+    font-size: 11px;
+    padding: 3px 6px;
+  }
+}
