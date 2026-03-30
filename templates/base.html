@@ -25,50 +25,56 @@
    <link rel="stylesheet" href="/static/CSS/login.css">
 </head>
 <body>
-
+<!-- ✅ MENU (do jeito que você pediu) -->
   <header>
-    
     <nav id="main-navbar" class="navbar navbar-expand-lg">
       <a href="/" class="navbar-brand">
         <img src="/static/img/logo.png" alt="logo" id="logo">
         <span id="hamburgueria-title">Olimpica</span>
       </a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar">
         <i class="fas fa-bars"></i>
       </button>
+
       <div class="collapse navbar-collapse" id="navbar">
         <ul class="navbar-nav">
-          <!-- Exemplo de links de navegação -->
+
           <li class="nav-item">
             <a href="#" class="nav-link">
               <i class='bx bxs-offer'></i> Promoção
             </a>
           </li>
+
           {% if current_user.is_authenticated %}
-          <!-- Links exibidos apenas quando o usuário está logado -->
-          <li class="nav-item">
-            <a href="/pedidos" class="nav-link">
-              <i class='bx bx-notepad'></i> Meus Pedidos
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="/cesta" class="nav-link">
-              <i class='bx bx-basket'></i> Carrinho
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="{{ url_for('user_bp.logout') }}" class="nav-link">Sair</a>
-          </li>
+            <li class="nav-item">
+              <a href="/pedidos" class="nav-link">
+                <i class='bx bx-notepad'></i> Meus Pedidos
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a href="/cesta" class="nav-link">
+                <i class='bx bx-basket'></i> Carrinho
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a href="{{ url_for('user_bp.logout') }}" class="nav-link">Sair</a>
+            </li>
           {% else %}
-          <!-- Links exibidos apenas quando o usuário NÃO está logado -->
-          <li class="nav-item">
-            <a href="/login" class="nav-link bold"><i class="fas fa-user"></i> Cadastrar / Entrar</a>
-          </li>
+            <li class="nav-item">
+              <a href="/login" class="nav-link bold">
+                <i class="fas fa-user"></i> Cadastrar / Entrar
+              </a>
+            </li>
           {% endif %}
+
         </ul>
       </div>
     </nav>
   </header>
+
   {% set messages = get_flashed_messages(with_categories=True) %}
   {% if messages %}
   <div class="msg-container">
@@ -167,5 +173,9 @@
  
 
   <!-- Bootstrap JS e outros scripts -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitt
+<!-- jQuery -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Popper.js (necessário para dropdowns e collapse do Bootstrap 4) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.3/js/bootstrap.min.js"></script>

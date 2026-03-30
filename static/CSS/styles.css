@@ -501,3 +501,243 @@ footer {
 /* Footer  Acaba aqui */
 
 
+/* ===== NAVBAR MOBILE ===== */
+@media (max-width: 768px) {
+  #main-navbar {
+    padding: 8px 12px;
+  }
+
+  #logo {
+    width: 55px;
+  }
+
+  #hamburgueria-title {
+    font-size: 16px;
+    bottom: 18px;
+    left: 60px;
+  }
+
+  /* Ícone do menu hamburguer (branco) */
+  .navbar-toggler {
+    border-color: #F5C518;
+    padding: 4px 8px;
+  }
+
+  .navbar-toggler .fa-bars {
+    color: #F5C518;
+    font-size: 22px;
+  }
+
+  /* Menu expandido */
+  .navbar-collapse {
+    background-color: #111;
+    padding: 10px 0;
+    border-top: 2px solid #F5C518;
+    margin-top: 8px;
+  }
+
+  .navbar-nav .nav-item .nav-link {
+    font-size: 16px;
+    padding: 10px 16px;
+    border-bottom: 1px solid #333;
+  }
+
+  .navbar-nav .nav-item:last-child .nav-link {
+    border-bottom: none;
+  }
+
+  .navbar-nav .nav-item .nav-link:hover {
+    background-color: #F5C518;
+    color: #000 !important;
+  }
+}
+
+
+
+/* ===== FOOTER MOBILE ===== */
+@media (max-width: 768px) {
+  .rodape-div {
+    flex-direction: column;
+    padding: 30px 16px 20px;
+    text-align: center;
+    align-items: center; /* ← centraliza as colunas horizontalmente */
+  }
+
+  .rodape-div-1,
+  .rodape-div-2,
+  .rodape-div-3,
+  .rodape-div-4 {
+    width: 100%;
+    padding: 12px 0;
+    border-bottom: 1px solid #333;
+    justify-content: center; /* ← centraliza o conteúdo interno */
+    display: flex;
+  }
+
+  .rodape-div-4 {
+    border-bottom: none;
+  }
+
+  .title-footer {
+    font-size: 18px;
+    text-align: center;
+  }
+
+  .elementoFooter {
+    font-size: 20px;
+    width: 100%; /* ← garante que ocupa a largura toda */
+  }
+
+  .elementoFooter p {
+    margin-top: 4px;
+    font-size: 20px;
+  }
+
+  .rodape-direitos {
+    font-size: 20px;
+    padding: 10px;
+    text-align: center;
+  }
+
+  /* Centraliza textos de contato (rodape-div-4) */
+  .contact-text {
+    text-align: center;
+    display: block;
+  }
+}
+
+
+
+
+
+/* --------------------------------------------------------------------------------------- COMEÇANDO O MEDIA QUERIES PARA O RESPONSIVO ---------------------------------------------------------------------------------------*/
+
+@media (max-width: 768px) {
+  /* Grid vira coluna única */
+  .movies-container {
+    grid-template-columns: 1fr;
+    grid-gap: 12px;
+    padding: 0 10px;
+  }
+    /* Ajustando o card-btn para ocupar toda a largura do card no mobile */
+  .card-btn a{ 
+    width:500px;
+    font-size: 30px;
+  }
+  /* Card vira row: texto esquerda, imagem direita */
+  .card.movie-card {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 230px;
+    overflow: hidden;
+  }
+
+  /* Texto ocupa o lado esquerdo */
+  .card.movie-card .card-body {
+    flex: 1;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+  }
+
+  /* Imagem vai para o lado direito */
+  .card.movie-card .card-img-top {
+    width: 220px;
+    min-width: 220px;
+    height: 230px;
+    order: 2; /* empurra para a direita */
+    background-size: cover;
+    background-position: center;
+    border-radius: 0 8px 8px 0;
+  }
+
+  /* Textos menores no mobile */
+  .card.movie-card .card-title {
+    font-size: 23px;
+    margin-bottom: 4px;
+    text-align: left;
+  }
+
+  .card.movie-card .card-text {
+    font-size: 20px;
+    margin-bottom: 10px;
+    /* Trunca textos longos */
+    white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    
+
+
+  /* Botão menor */
+  .card.movie-card .card-btn {
+    font-size: 14px;
+    padding: 4px 8px;
+    text-align: center;
+    margin: 0;
+    
+  }
+
+  /* Desabilita o hover de elevação no mobile */
+  .card.movie-card:hover {
+    transform: none;
+  }
+}
+
+
+@media (max-width: 768px) {
+  /* === BEBIDAS (card-img-top-bebida) === */
+  .card.movie-card:has(.card-img-top-bebida) {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 230px;
+    overflow: hidden;
+  }
+
+  .card.movie-card .card-img-top-bebida {
+    width: 230px;
+    min-width: 230px;
+    height: 230px;
+    order: 2;
+    background-size: cover;
+    background-position: center;
+    border-radius: 0 8px 8px 0;
+  }
+
+  .card.movie-card:has(.card-img-top-bebida) .card-body {
+    flex: 1;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+  }
+
+  .card.movie-card:has(.card-img-top-bebida) .card-title {
+    font-size: 23px;
+    margin-bottom: 4px;
+    text-align: left;
+  }
+
+  .card.movie-card:has(.card-img-top-bebida) .card-text {
+    font-size: 20px;
+    margin-bottom: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .card.movie-card:has(.card-img-top-bebida) .card-btn {
+    font-size: 15px;
+    padding: 4px 8px;
+    text-align: center;
+  }
+
+  .card.movie-card:has(.card-img-top-bebida):hover {
+    transform: none;
+  }
+}
