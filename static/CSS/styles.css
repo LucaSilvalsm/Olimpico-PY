@@ -768,6 +768,10 @@ footer {
     font-size: 14px;
     padding: 8px 12px;
   }
+  .card.movie-card .card-btn {
+  font-size: 9px;    /* era 11px */
+  padding: 2px 4px;  /* era 3px 6px */
+}
 }
 
 
